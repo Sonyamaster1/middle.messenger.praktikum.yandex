@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [handlebars({
     partialDirectory: resolve(__dirname, 'src/partials'),
     context: {
-      username: 'Sonya M'
+      username: 'Sonya Mitrofanova'
     }
   })],
   server: {

@@ -1,0 +1,48 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-section {
+  background: #ffffff;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 30px 30px 30px;
+}
+
+.user-form {
+  display: flex;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 20px;
+  flex-direction: column;
+}
+
+.input {
+  width: 510px;
+  border: none;
+  border-bottom: 1px solid #EAEAEA;
+  outline: none;
+}
+
+.title {
+  text-align: center;
+  color: #1e1e1e;
+}
+
+.avatar-container {
+  background: #efefef;
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+  margin: 0 auto;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
