@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100vh;
 }
 
 .user-section {
@@ -39,6 +40,9 @@
   width: 130px;
   height: 130px;
   margin: 0 auto;
+  background-image: url(../../static/icons/avater.svg);
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .input-container {
