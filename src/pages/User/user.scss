@@ -43,10 +43,35 @@
   background-image: url(../../static/icons/avater.svg);
   background-position: center;
   background-repeat: no-repeat;
+  margin-bottom: 20px;
+  transition: .2s ease-in-out;
+}
+
+.avatar-container:hover {
+  background-color: rgba(0, 0, 0, 0.15);
+  transition: .2s ease-in-out;
 }
 
 .input-container {
   display: flex;
   flex-direction: column;
   gap: 30px;
+}
+
+.to-registry-btn {
+  padding: 12px 70px;
+  background: #3369f3;
+  border-radius: 8px;
+  border: none;
+  color: #ffffff;
+  text-decoration: none;
+  margin-bottom: 15px;
+  font-size: 16px;
+  text-align: center;
+  margin: 30px 0 0 0;
+}
+
+.to-registry-btn:hover {
+  background-color: rgba(51, 105, 243, 0.9);
+  
 }

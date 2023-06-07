@@ -9,9 +9,6 @@ export default defineConfig({
   },
   plugins: [handlebars({
     partialDirectory: resolve(__dirname, 'src/partials'),
-    context: {
-      username: 'Sonya Mitrofanova'
-    }
   })],
   server: {
     port: 3000,
