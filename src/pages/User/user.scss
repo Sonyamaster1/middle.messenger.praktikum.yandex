@@ -40,16 +40,6 @@
   width: 130px;
   height: 130px;
   margin: 0 auto;
-  background-image: url(../../static/icons/avater.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-  margin-bottom: 20px;
-  transition: .2s ease-in-out;
-}
-
-.avatar-container:hover {
-  background-color: rgba(0, 0, 0, 0.15);
-  transition: .2s ease-in-out;
 }
 
 .input-container {
