@@ -12,12 +12,11 @@
         <h2 class="title">Sign in</h2>
         <form class="auth-form">
           <div class="input-container">
-            <input class="input" type="text" name="ligin" />
-            <input class="input" type="password" name="password" />
+            <input class="input" type="text" name="ligin"  placeholder="Login"/>
+            <input class="input" type="password" name="password" placeholder="Password" />
           </div>
-          {{> button class='btn' text='Enter' link='../Chats/chats.html'}} {{>
-          button class='sign-in-link' link='../Registry/registry.html'
-          text='Sign Up'}}
+          {{> button class='btn' text='Enter' link='../Chats/chats.html'}}
+          {{> button class='sign-in-link' link='../Registry/registry.html' text='Sign Up'}}
         </form>
       </section>
     </main>
