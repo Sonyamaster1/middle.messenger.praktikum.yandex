@@ -9,7 +9,18 @@
   </head>
   <body>
     <div id="root"></div>
-    {{> button class='btn' text='Перейти к регистрации' link='./pages/Auth/auth.html'}}
+    <main class="main">
+      <nav>
+        <ul>
+          <li>{{> button class='btn' text='Перейти к авторизации' link='./pages/Auth/auth.html'}}</li>
+          <li>{{> button class='btn' text='Перейти к чатам' link='./pages/Chats/chats.html'}}</li>
+          <li>{{> button class='btn' text='Перейти к ошибке 404' link='./pages/Error404/error404.html'}}</li>
+          <li>{{> button class='btn' text='Перейти к ошибке 500' link='./pages/Error5/error5.html'}}</li>
+          <li>{{> button class='btn' text='Перейти к регистрации' link='./pages/Registry/registry.html'}}</li>
+          <li>{{> button class='btn' text='Перейти к редактированию профиля' link='./pages/User/user.html'}}</li>
+        </ul>
+      </nav>
+    </main>
   </body>
   <script src="./index.js" type="module"></script>
 </html>
