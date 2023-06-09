@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="stylesheet" href="./error5.scss" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Error 500</title>
-</head>
-<body>
-  <main>
-    <div class="error-container">
-      <h2 class="error-title">500</h2>
-      <p class="error-text">Мы уже фиксим</p>
-      {{> button class='error-link' text='Назад к чатам'
-      link='../Chats/chats.html'}}
-    </div>
-  </main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="./error5.scss" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error 500</title>
+  </head>
+  <body>
+    <main>
+      <div class="error-container">
+        <h2 class="error-title">500</h2>
+        <p class="error-text">Мы уже фиксим</p>
+        <button class="error-link" type="button" onclick="window.location.href ='../Chats/chats.html'">Назад к чатам</button>
+      </div>
+    </main>
+  </body>
 </html>
