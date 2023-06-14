@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./user.scss" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User</title>
+  </head>
+  <body>
+    <main class="page">
+      <section class="user-section">
+        <h2 class="title">Change a user</h2>
+        <div class="avatar-container"></div>
+        <form class="user-form">
+          <div class="input-container">
+            {{> input class='input' name='email' placeholder='Email' type='email'}}
+            {{> input class='input' name='login' placeholder='Login' type='text'}}
+            {{> input class='input' name='first_name' placeholder='First Name' type='text'}}
+            {{> input class='input' name='second_name' placeholder='Second Name' type='text'}}
+            {{> input class='input' name='display_name' placeholder='Display Name' type='text'}}
+            {{> input class='input' name='phone' placeholder='Phone' type='tel'}}
+            {{> input class='input' name='avatar' placeholder='Avatar' type='file'}}
+            {{> input class='input' name='oldPassword' placeholder='OldPassword' type='password'}}
+            {{> input class='input' name='newPassword' placeholder='NewPassword' type='password'}}
+          </div>
+        </form>
+        <button class="to-registry-btn" type="button" onclick="window.location.href ='../Auth/auth.html'">Back to Sign In</button>
+      </section>
+    </main>
+  </body>
+</html>
