@@ -11,12 +11,12 @@
 }
 
 .registry-section {
-  background: #ffffff;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+  background: #fff;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 14%);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  padding: 50px 30px 30px 30px;
+  padding: 50px 30px 30px;
 }
 
 .btn {
@@ -24,11 +24,10 @@
   background: #3369f3;
   border-radius: 8px;
   border: none;
-  color: #ffffff;
-  margin-bottom: 15px;
+  color: #fff;
   font-size: 16px;
   text-decoration: none;
-  margin: 30px 0;
+  margin: 30px 0 15px;
   text-align: center;
 }
 

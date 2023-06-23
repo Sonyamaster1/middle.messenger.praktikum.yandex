@@ -1,15 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <main>
-      Тут будет список чатов
-      <input nama="message" />
-    </main>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="./chats.scss" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body class="page">
+        <main class="main">
+            <section class="chats-list">
+                <div class="search">
+                    <a href="../User/user.html" class="back-to-user">Профиль</a>
+                    <form class="search-form">
+                        {{> input class='search-input' name='serch'
+                        placeholder='Поиск' type='text'}}
+                    </form>
+                </div>
+                <div class="dialogue">
+                    <div class="interlocutor-avatar"></div>
+                    <div class="message-info">
+                        <div class="personality">
+                            <p class="interlocutor-name">Rostislav</p>
+                            <p class="interlocutor-name">kiss you!</p>
+                        </div>
+                        <p class="data">12:30</p>
+                    </div>
+                </div>
+            </section>
+            <section class="chat-window">
+                <div class="chat-header">
+                    <div class="user-avatar"></div>
+                    <p class="user-name">Kate</p>
+                    <div class="burger-menu">
+                        <div class="burger-span"></div>
+                        <div class="burger-span"></div>
+                        <div class="burger-span"></div>
+                    </div>
+                </div>
+                <div class="message-main">
+                    <p class="message-time">May 19</p>
+                    <div class="message">
+                        <p class="message-text">
+                            Привет! Смотри, тут всплыл интересный кусок лунной
+                            космической истории — НАСА в какой-то момент
+                            попросила Хассельблад адаптировать модель SWC для
+                            полетов на Луну. Сейчас мы все знаем что астронавты
+                            летали с моделью 500 EL — и к слову говоря, все
+                            тушки этих камер все еще находятся на поверхности
+                            Луны, так как астронавты с собой забрали только
+                            кассеты с пленкой. Хассельблад в итоге адаптировал
+                            SWC для космоса, но что-то пошло не так и на ракету
+                            они так никогда и не попали. Всего их было
+                            произведено 25 штук, одну из них недавно продали на
+                            аукционе за 45000 евро.
+                        </p>
+                    </div>
+                    <div class="message-image"></div>
+                    <div class="my-message">
+                        <p class="my-message-text">Cool!</p>
+                    </div>
+                </div>
+                <div class="message-field">
+                    <button class="attach-btn" type="button"></button>
+                    {{> input class='message-input' name='message'
+                    placeholder='Message' type='text'}}
+                    <button class="send-btn" type="submit"></button>
+                </div>
+            </section>
+        </main>
+    </body>
 </html>
