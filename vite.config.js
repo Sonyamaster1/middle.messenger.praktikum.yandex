@@ -4,12 +4,13 @@ import handlebars from 'vite-plugin-handlebars';
 
 export default defineConfig({
   root: resolve(__dirname, 'src'),
+  assetsInclude: ['**/*.hbs'],
   build: {
     outDir: resolve(__dirname, 'dist'),
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'src/index.html'),
-        auth: resolve(__dirname, "src/pages/Auth/auth.html"),
+        auth: resolve(__dirname, "src/pages/Auth/auth.hbs"),
         register: resolve(__dirname, "src/pages/Registry/registry.html"),
         chats: resolve(__dirname,  "src/pages/Chats/chats.html"),
         user: resolve(__dirname,  "src/pages/User/user.html"),
@@ -24,4 +25,4 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-}) 
+})
