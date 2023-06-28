@@ -1,4 +1,4 @@
-import Handlebars from 'handlebars';
+// import Handlebars from 'handlebars';
 import EventBus from './EventBus';
 import { nanoid } from 'nanoid';
 
@@ -14,6 +14,8 @@ export default class Block {
 
   private _element: HTMLElement;
 
+  private tagName: string;
+
   private _meta: { props: any };
 
   protected props: any;
@@ -22,7 +24,8 @@ export default class Block {
 
   protected children: Record<string, Block>;
 
-  constructor(propsAndChildren: any = {}) {
+  constructor(propsAndChildren: any = {}, tagName: string = 'div') {
+    this.tagName = tagName;
     const eventBus = new EventBus();
     const { props, children } = this.getChildren(propsAndChildren);
     this._meta = {
@@ -59,8 +62,28 @@ export default class Block {
     return { props, children };
   }
 
-  init() {
+  //   init() {
+  //     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+  //   }
+
+  //   private _createDocumentElement(tagName: string): HTMLElement {
+  //     return document.createElement(tagName);
+  //   }
+
+
+  private init(): void {
+    this.createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+  }
+
+
+  private createResources(): void {
+    this._element = this._createDocumentElement(this.tagName);
+  }
+
+
+  private _createDocumentElement(tagName: string): HTMLElement {
+    return document.createElement(tagName);
   }
 
   private _componentDidMount() {
@@ -151,10 +174,6 @@ export default class Block {
     });
   }
 
-  private _createDocumentElement(tagName: any) {
-    return document.createElement(tagName);
-  }
-
   show() {
     this.getContent().style.display = 'block';
   }
@@ -180,7 +199,7 @@ export default class Block {
     }
   }
 
-  protected compile(template: (context: any) => string, context: any) {
+  compile(template: (context: any) => string, context: any) {
     const fragment = this._createDocumentElement(
       'template',
     ) as HTMLTemplateElement;
@@ -197,10 +216,15 @@ export default class Block {
       context[key] = `<div data-id="id-${child.id}"></div>`;
     });
 
-    const htmlString = Handlebars.compile(template)(context);
-
+    // const htmlString = Handlebars.compile(template)(context);
+    const htmlString = template(context);
+    // console.log('test1');
+    // console.log('test2');
+    // console.log('test3');
     fragment.innerHTML = htmlString;
-    console.log(htmlString);
+    console.log(context);
+
+
 
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
