@@ -9,7 +9,8 @@
       "rules": {
         "import/no-extraneous-dependencies": "off",
         "import/extensions": "off",
-        "react/jsx-filename-extension": "off"
+        "react/jsx-filename-extension": "off",
+        "no-useless-constructor": "off"
       },
       "extends": [
         "airbnb-typescript",
