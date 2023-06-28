@@ -5,7 +5,7 @@ import Input from '../../components/Input';
 import Block from '../../utils/Block';
 import { createErrorMessage } from '../../utils/CreateErrorMessage';
 import { getFormData } from '../../utils/getFormData';
-import * as styles from './auth.module.scss';
+import * as styles from '../../../style.scss';
 
 
 interface IAuthProps {
@@ -20,11 +20,22 @@ export default class AuthPage extends Block {
   protected initChildren(): void {
     this.children.enterbtn = new Button({
       text: 'Enter',
+      link: '../Chats/chats.html',
+      type: 'submit',
       class: 'btn',
       events: {
-        click: (e) => {
+        click: (e: any) => {
           e.preventDefault();
-          getFormData('auth-form');
+          const formData = getFormData('auth-form');
+          let loginReg = validation.login.regExp;
+          if (!loginReg.test(formData.login)) {
+            createErrorMessage(e.target, validation.login.message);
+          }
+          const passwordRegExp = validation.password.regExp;
+          if (!passwordRegExp.test(formData.password)) {
+            return createErrorMessage(e.target, validation.password.message);
+          }
+
           location.href = '/pages/Chats/chats.html';
         },
       },
@@ -32,9 +43,12 @@ export default class AuthPage extends Block {
 
     this.children.toregistrybtn = new Button({
       text: 'Sign Up',
+      type: 'button',
       class: 'sign-in-link',
+      link: '../Registry/registry.html',
       events: {
-        click: () => {
+        click: (e) => {
+          e.preventDefault();
           location.href = '/pages/Registry/registry.html';
         },
       },

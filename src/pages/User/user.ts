@@ -4,7 +4,7 @@ import { validation } from '../../constants/validation';
 import Block from '../../utils/Block';
 import { createErrorMessage } from '../../utils/CreateErrorMessage';
 import { getFormData } from '../../utils/getFormData';
-import * as styles from './user.module.scss';
+import * as styles from '../../../style.scss';
 import template from './user.hbs';
 
 
@@ -18,14 +18,12 @@ export default class UserPage extends Block {
   }
 
   protected initChildren(): void {
-    this.children.enterbutton = new Button({
-      text: 'Enter',
-      class: 'btn',
-    });
 
     this.children.buttonavatar = new Button({
       text: 'Change Avatar',
       class: 'avatar-btn',
+      type: 'submit',
+      link: '',
       events: {
         click: (e) => {
           e.preventDefault();
@@ -34,13 +32,37 @@ export default class UserPage extends Block {
       },
     });
 
-    this.children.buttonchangepass = new Button({
-      text: 'Change Password',
-      class: 'password-btn',
+    this.children.button = new Button({
+      text: 'Enter',
+      type: 'submit',
+      class: 'enter-btn',
+      link: '',
       events: {
         click: (e) => {
           e.preventDefault();
-          getFormData('password-form');
+          location.href = '/pages/Chats/chats.html';
+        },
+      },
+    });
+
+    this.children.buttonchangepass = new Button({
+      text: 'Change Password',
+      class: 'password-btn',
+      type: 'submit',
+      link: '../Chats/chats.html',
+      events: {
+        click: (e) => {
+          e.preventDefault();
+          const formData = getFormData('password-form');
+          let oldPasswordReg = validation.password.regExp;
+          if (!oldPasswordReg.test(formData.oldPassword)) {
+            return createErrorMessage(formData.oldPassword, validation.password.message);
+          }
+          let newPasswordReg = validation.password.regExp;
+          console.log(formData.NewPassword);
+          if (!newPasswordReg.test(formData.NewPassword)) {
+            return createErrorMessage(formData.oldPassword, validation.password.message);
+          }
           location.href = '/pages/Chats/chats.html';
         },
       },
@@ -49,10 +71,32 @@ export default class UserPage extends Block {
     this.children.enterbutton = new Button({
       text: 'Registration',
       class: 'registry-btn',
+      type: 'submit',
+      link: '',
       events: {
         click: (e) => {
           e.preventDefault();
-          getFormData('registry-form');
+          const formData = getFormData('registry-form');
+          let emailReg = validation.email.regExp;
+          if (!emailReg.test(formData.inputemail)) {
+            return createErrorMessage(formData.inputemail, validation.email.message);
+          }
+          let loginReg = validation.login.regExp;
+          if (!loginReg.test(formData.inputlogin)) {
+            return createErrorMessage(formData.inputlogin, validation.login.message);
+          }
+          let firstReg = validation.first_name.regExp;
+          if (!firstReg.test(formData.inputfirst_name)) {
+            return createErrorMessage(formData.inputfirst_name, validation.first_name.message);
+          }
+          let secondReg = validation.second_name.regExp;
+          if (!secondReg.test(formData.inputsecond_name)) {
+            return createErrorMessage(formData.inputsecond_name, validation.second_name.message);
+          }
+          let phoneReg = validation.phone.regExp;
+          if (!phoneReg.test(formData.inputphone)) {
+            return createErrorMessage(formData.inputphone, validation.phone.message);
+          }
         },
       },
     });

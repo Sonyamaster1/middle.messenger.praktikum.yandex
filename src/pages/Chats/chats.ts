@@ -5,7 +5,7 @@ import Block from '../../utils/Block';
 import { createErrorMessage } from '../../utils/CreateErrorMessage';
 import { getFormData } from '../../utils/getFormData';
 import template from './chats.hbs';
-import * as styles from './chats.module.scss';
+import * as styles from '../../../style.scss';
 
 interface IChatsProps {
   className: string;
@@ -37,8 +37,10 @@ export default class ChatsPage extends Block {
     });
 
     this.children.btn = new Button({
-      text: 'Enter',
+      text: '',
       class: 'send-btn',
+      type: 'submit',
+      link: '../User/user.html',
       events: {
         click: (e) => {
           e.preventDefault();

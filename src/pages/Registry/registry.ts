@@ -5,7 +5,7 @@ import Block from '../../utils/Block';
 import { createErrorMessage } from '../../utils/CreateErrorMessage';
 import { getFormData } from '../../utils/getFormData';
 import template from './registry.hbs';
-import * as styles from './registry.module.scss';
+import * as styles from '../../../style.scss';
 
 
 interface IRegistryProps {
@@ -20,11 +20,37 @@ export default class RegistryPage extends Block {
   protected initChildren(): void {
     this.children.enterbtn = new Button({
       text: 'Enter',
+      type: 'submit',
       class: 'btn',
+      link: '../User/user.html',
       events: {
         click: (e) => {
           e.preventDefault();
-          getFormData('registry-form');
+          const formData = getFormData('registry-form');
+          let emailReg = validation.email.regExp;
+          if (!emailReg.test(formData.email)) {
+            createErrorMessage(e.target, validation.email.message);
+          }
+          const loginRegExp = validation.login.regExp;
+          if (!loginRegExp.test(formData.login)) {
+            createErrorMessage(e.target, validation.login.message);
+          }
+          const firstRegExp = validation.first_name.regExp;
+          if (!firstRegExp.test(formData.first_name)) {
+            createErrorMessage(e.target, validation.first_name.message);
+          }
+          const secondRegExp = validation.second_name.regExp;
+          if (!secondRegExp.test(formData.second_name)) {
+            createErrorMessage(e.target, validation.second_name.message);
+          }
+          const phoneRegExp = validation.phone.regExp;
+          if (!phoneRegExp.test(formData.phone)) {
+            createErrorMessage(e.target, validation.phone.message);
+          }
+          const passwordRegExp = validation.password.regExp;
+          if (!passwordRegExp.test(formData.password)) {
+            return createErrorMessage(e.target, validation.password.message);
+          }
           location.href = '/pages/User/user.html';
         },
       },
@@ -32,7 +58,9 @@ export default class RegistryPage extends Block {
 
     this.children.toauthbtn = new Button({
       text: 'Sign In',
+      type: 'button',
       class: 'sign-up-link',
+      link: '../Error5/error5.html',
       events: {
         click: (e) => {
           e.preventDefault();

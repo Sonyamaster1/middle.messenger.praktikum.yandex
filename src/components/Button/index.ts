@@ -4,8 +4,12 @@ import template from './button.hbs';
 
 interface IButtonProps {
   text: string;
+  link: string;
+  type: string;
   class: string;
-  events?: { click?: (e: Event) => undefined | void };
+  events?: {
+    click?: (e: Event) => undefined | void,
+  };
 }
 
 export default class Button extends Block {

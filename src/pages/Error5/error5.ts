@@ -1,7 +1,7 @@
 import Button from '../../components/Button';
 import Block from '../../utils/Block';
 import template from './error5.hbs';
-import * as styles from './error5.module.scss';
+import * as styles from '../../../style.scss';
 
 interface IError5Props {
   className: string;
@@ -16,7 +16,9 @@ export default class Error5Page extends Block {
   protected initChildren(): void {
     this.children.button = new Button({
       text: 'Back to chats',
+      type: 'button',
       class: 'error-link',
+      link: '../Chats/chats.html',
       events: {
         click: (e) => {
           e.preventDefault();

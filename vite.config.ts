@@ -4,7 +4,6 @@ import handlebars from './vite-plugin-handlebars-precompile';
 
 export default defineConfig({
   root: resolve(__dirname, 'src'),
-  assetsInclude: ['**/*.hbs'],
   build: {
     outDir: resolve(__dirname, 'dist'),
     rollupOptions: {

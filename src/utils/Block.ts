@@ -134,7 +134,6 @@ export default class Block {
   private _render() {
     const fragment = this.render();
     const newElement = fragment.firstElementChild as HTMLElement;
-    console.log(fragment);
 
     if (this._element) {
       this._removeEvents();
@@ -216,13 +215,8 @@ export default class Block {
       context[key] = `<div data-id="id-${child.id}"></div>`;
     });
 
-    // const htmlString = Handlebars.compile(template)(context);
     const htmlString = template(context);
-    // console.log('test1');
-    // console.log('test2');
-    // console.log('test3');
     fragment.innerHTML = htmlString;
-    console.log(context);
 
 
 
