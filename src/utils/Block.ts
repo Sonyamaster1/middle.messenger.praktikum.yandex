@@ -1,6 +1,7 @@
-// import Handlebars from 'handlebars';
+
 import EventBus from './EventBus';
 import { nanoid } from 'nanoid';
+import { Props } from '../types';
 
 export default class Block {
   static EVENTS = {
@@ -8,6 +9,7 @@ export default class Block {
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
     FLOW_RENDER: 'flow:render',
+    FLOW_CWU: 'flow:component-will-unmount',
   };
 
   public id = nanoid(6);
@@ -16,15 +18,15 @@ export default class Block {
 
   private tagName: string;
 
-  private _meta: { props: any };
+  private _meta: { props: Props };
 
-  protected props: any;
+  protected props: Props;
 
   private eventBus: () => EventBus;
 
   protected children: Record<string, Block>;
 
-  constructor(propsAndChildren: any = {}, tagName: string = 'div') {
+  constructor(propsAndChildren: Props = {}, tagName: string = 'div') {
     this.tagName = tagName;
     const eventBus = new EventBus();
     const { props, children } = this.getChildren(propsAndChildren);
@@ -43,11 +45,12 @@ export default class Block {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CWU, this.unmountComponent.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
   }
 
-  getChildren(propsAndChildren: any) {
-    const props: any = {};
+  getChildren(propsAndChildren: Props) {
+    const props: Props = {};
     const children: any = {};
 
     Object.entries(propsAndChildren).map(([key, value]) => {
@@ -62,14 +65,6 @@ export default class Block {
     return { props, children };
   }
 
-  //   init() {
-  //     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-  //   }
-
-  //   private _createDocumentElement(tagName: string): HTMLElement {
-  //     return document.createElement(tagName);
-  //   }
-
 
   private init(): void {
     this.createResources();
@@ -80,6 +75,8 @@ export default class Block {
   private createResources(): void {
     this._element = this._createDocumentElement(this.tagName);
   }
+
+  public componentWillUnmount(): void { }
 
 
   private _createDocumentElement(tagName: string): HTMLElement {
@@ -92,21 +89,18 @@ export default class Block {
 
   componentDidMount() {}
 
+  private unmountComponent(): void {
+    this.componentWillUnmount();
+    this._removeEvents();
+
+    this.element.remove();
+  }
+
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  //   private _componentDidUpdate() {
-  //     if (this.componentDidUpdate()) {
-  //       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-  //     }
-  //   }
-
-  //   componentDidUpdate() {
-  //     return true;
-  //   }
-
-  private _componentDidUpdate(oldProps: any, newProps: any) {
+  private _componentDidUpdate(oldProps: Props, newProps: Props) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -115,7 +109,7 @@ export default class Block {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  componentDidUpdate(_oldProps: any, _newProps: any) {
+  componentDidUpdate(_oldProps: Props, _newProps: Props) {
     return true;
   }
 
@@ -129,6 +123,10 @@ export default class Block {
 
   get element() {
     return this._element;
+  }
+
+  public deleteElement(): void {
+    this.eventBus().emit(Block.EVENTS.FLOW_CWU);
   }
 
   private _render() {
@@ -153,7 +151,7 @@ export default class Block {
     return this.element;
   }
 
-  private _makePropsProxy(props: any) {
+  private _makePropsProxy(props: Props) {
     const self = this;
 
     return new Proxy(props, {
@@ -182,7 +180,7 @@ export default class Block {
   }
 
   private _addEvents() {
-    const events: Record<string, () => void> = (this.props as any).events;
+    const events: Record<string, () => void> = (this.props as Props).events;
     if (!events) {
       return;
     }
@@ -192,7 +190,7 @@ export default class Block {
   }
 
   private _removeEvents() {
-    const events: Record<string, () => void> = (this.props as any).events;
+    const events: Record<string, () => void> = (this.props as Props).events;
     if (!events || !this._element) {
       return;
     }
