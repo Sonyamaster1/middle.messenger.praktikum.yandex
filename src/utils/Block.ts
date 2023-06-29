@@ -189,10 +189,13 @@ export default class Block {
     });
   }
 
-  private _removeEvents() {
-    const events: Record<string, () => void> = (this.props as Props).events;
-    if (!events || !this._element) {
-      return;
+  private _removeEvents(): void {
+    const { events } = this.props;
+
+    if (events) {
+      Object.keys(events).forEach((eventName) => {
+        this.element.addEventListener(eventName, events[eventName]);
+      });
     }
   }
 
