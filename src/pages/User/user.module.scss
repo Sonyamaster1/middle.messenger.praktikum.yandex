@@ -6,12 +6,12 @@
 }
 
 .user-section {
-  background: #ffffff;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+  background: #fff;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 14%);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  padding: 50px 30px 30px 30px;
+  padding: 50px 30px 30px;
 }
 
 .user-form {
@@ -20,6 +20,7 @@
   font-size: 20px;
   line-height: 20px;
   flex-direction: column;
+  gap: 20px;
 }
 
 .input {
@@ -39,16 +40,15 @@
   border-radius: 50%;
   width: 130px;
   height: 130px;
-  margin: 0 auto;
-  background-image: url(../../static/icons/avater.svg);
+  margin: 0 auto 20px;
+  background-image: url('../../static/icons/avatar.svg');
   background-position: center;
   background-repeat: no-repeat;
-  margin-bottom: 20px;
   transition: 0.2s ease-in-out;
 }
 
 .avatar-container:hover {
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 15%);
   transition: 0.2s ease-in-out;
 }
 
@@ -63,14 +63,20 @@
   background: #3369f3;
   border-radius: 8px;
   border: none;
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
-  margin-bottom: 15px;
   font-size: 16px;
   text-align: center;
-  margin: 30px 0 0 0;
+  margin: 30px 0 15px;
 }
 
 .to-registry-btn:hover {
-  background-color: rgba(51, 105, 243, 0.9);
+  background-color: rgba(51, 105, 243, 90%);
+}
+
+.container {
+    display: flex;
+    padding-top: 20px;
+    flex-direction: column;
+    gap: 20px;
 }
