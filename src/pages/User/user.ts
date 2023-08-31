@@ -6,7 +6,10 @@ import { createErrorMessage } from '../../utils/CreateErrorMessage';
 import { getFormData } from '../../utils/getFormData';
 import * as styles from '../../../style.scss';
 import template from './user.hbs';
-
+import { AvatarInput } from '../../components/AvatarInput';
+import UserController from '../../controllers/UserController';
+import AuthController from '../../controllers/AuthController';
+import { State, withStore } from '../../utils/Store';
 
 interface IUserProps {
   className: string;
@@ -18,97 +21,65 @@ export default class UserPage extends Block {
   }
 
   protected initChildren(): void {
-
-    this.children.buttonavatar = new Button({
-      text: 'Change Avatar',
-      class: 'avatar-btn',
-      type: 'submit',
-      link: '',
-      events: {
-        click: (e) => {
-          e.preventDefault();
-          getFormData('avatar-form');
-        },
-      },
-    });
-
     this.children.button = new Button({
       text: 'Enter',
-      type: 'submit',
-      class: 'enter-btn',
-      link: '',
+      class: 'button',
+    });
+
+    this.children.buttonavatar = new AvatarInput({
       events: {
         click: (e) => {
           e.preventDefault();
-          location.href = '/pages/Chats/chats.html';
+          const inputFile: HTMLInputElement | null = document.getElementById('avatar') as HTMLInputElement;
+          const formData: FormData = new FormData();
+          const file = inputFile.files ? inputFile.files[0] : 'nofile';
+          formData.append('avatar', file);
+          UserController.putUserAvatar(formData);
         },
       },
     });
 
-    this.children.buttonchangepass = new Button({
-      text: 'Change Password',
-      class: 'password-btn',
-      type: 'submit',
-      link: '../Chats/chats.html',
-      events: {
-        click: (e) => {
-          e.preventDefault();
-          const formData = getFormData('password-form');
-          let oldPasswordReg = validation.password.regExp;
-          if (!oldPasswordReg.test(formData.oldPassword)) {
-            return createErrorMessage(formData.oldPassword, validation.password.message);
-          }
-          let newPasswordReg = validation.password.regExp;
-          console.log(formData.NewPassword);
-          if (!newPasswordReg.test(formData.NewPassword)) {
-            return createErrorMessage(formData.oldPassword, validation.password.message);
-          }
-          location.href = '/pages/Chats/chats.html';
-        },
-      },
-    });
-
-    this.children.enterbutton = new Button({
+    this.children.editbutton = new Button({
       text: 'Registration',
-      class: 'registry-btn',
-      type: 'submit',
-      link: '',
+      class: 'button',
       events: {
         click: (e) => {
           e.preventDefault();
-          const formData = getFormData('registry-form');
-          let emailReg = validation.email.regExp;
-          if (!emailReg.test(formData.inputemail)) {
-            return createErrorMessage(formData.inputemail, validation.email.message);
-          }
-          let loginReg = validation.login.regExp;
-          if (!loginReg.test(formData.inputlogin)) {
-            return createErrorMessage(formData.inputlogin, validation.login.message);
-          }
-          let firstReg = validation.first_name.regExp;
-          if (!firstReg.test(formData.inputfirst_name)) {
-            return createErrorMessage(formData.inputfirst_name, validation.first_name.message);
-          }
-          let secondReg = validation.second_name.regExp;
-          if (!secondReg.test(formData.inputsecond_name)) {
-            return createErrorMessage(formData.inputsecond_name, validation.second_name.message);
-          }
-          let phoneReg = validation.phone.regExp;
-          if (!phoneReg.test(formData.inputphone)) {
-            return createErrorMessage(formData.inputphone, validation.phone.message);
-          }
+          let data = getFormData('settings-registry-form');
+          UserController.putUserInfo(data);
         },
       },
     });
 
-    this.children.inputavatar = new Input({
-      name: 'avatar',
-      placeholder: 'Avatar',
-      type: 'file',
+    this.children.buttonlogout = new Button({
+      text: 'Logout',
+      class: 'button',
+      type: 'button',
+      events: {
+        click: () => { AuthController.logout(); },
+      },
+    });
+
+    this.children.inputfirst_name = new Input({
+      name: 'first_name',
+      placeholder: 'First Name',
+      type: 'text',
       class: 'input',
       events: {
-        blur: () => {},
-        focus: () => {},
+        blur: (e: any) => {
+          let reg = validation.first_name.regExp;
+          if (!reg.test(e.target.value)) {
+            createErrorMessage(
+              e.target,
+              validation.first_name.message,
+            );
+          }
+        },
+        focus: () => {
+          let err = document.getElementById('error');
+          err!.style.display = 'none';
+          err!.innerText = '';
+        },
       },
     });
 
@@ -152,26 +123,6 @@ export default class UserPage extends Block {
       },
     });
 
-    this.children.inputfirst_name = new Input({
-      name: 'first_name',
-      placeholder: 'First Name',
-      type: 'text',
-      class: 'input',
-      events: {
-        blur: (e: any) => {
-          let reg = validation.first_name.regExp;
-          if (!reg.test(e.target.value)) {
-            createErrorMessage(e.target, validation.first_name.message);
-          }
-        },
-        focus: () => {
-          let err = document.getElementById('error');
-          err!.style.display = 'none';
-          err!.innerText = '';
-        },
-      },
-    });
-
     this.children.inputsecond_name = new Input({
       name: 'second_name',
       placeholder: 'Second Name',
@@ -181,7 +132,10 @@ export default class UserPage extends Block {
         blur: (e: any) => {
           let reg = validation.second_name.regExp;
           if (!reg.test(e.target.value)) {
-            createErrorMessage(e.target, validation.second_name.message);
+            createErrorMessage(
+              e.target,
+              validation.second_name.message,
+            );
           }
         },
         focus: () => {
@@ -223,6 +177,18 @@ export default class UserPage extends Block {
       },
     });
 
+    this.children.buttonchangepass = new Button({
+      text: 'Change password',
+      class: 'button',
+      events: {
+        click: (e) => {
+          e.preventDefault();
+          let data = getFormData('password-form');
+          UserController.putPassword(data);
+        },
+      },
+    });
+
     this.children.inputoldpass = new Input({
       name: 'oldPassword',
       placeholder: 'Old Password',
@@ -232,7 +198,10 @@ export default class UserPage extends Block {
         blur: (e: any) => {
           let reg = validation.password.regExp;
           if (!reg.test(e.target.value)) {
-            createErrorMessage(e.target, validation.password.message);
+            createErrorMessage(
+              e.target,
+              validation.password.message,
+            );
           }
         },
         focus: () => {
@@ -252,7 +221,10 @@ export default class UserPage extends Block {
         blur: (e: any) => {
           let reg = validation.password.regExp;
           if (!reg.test(e.target.value)) {
-            createErrorMessage(e.target, validation.password.message);
+            createErrorMessage(
+              e.target,
+              validation.password.message,
+            );
           }
         },
         focus: () => {
@@ -264,7 +236,22 @@ export default class UserPage extends Block {
     });
   }
 
+  componentDidMount(): void {
+    AuthController.fetchUser();
+  }
+
   render() {
-    return this.compile(template, { styles });
+    return this.compile(template, {
+      styles,
+      props: {
+        avatar: `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}`,
+        isAvatar: this.props.avatar,
+      },
+    });
   }
 }
+function mapStateToProps(state: State) {
+  return { ...state.user };
+}
+
+export const Profile = withStore(mapStateToProps)(UserPage);
