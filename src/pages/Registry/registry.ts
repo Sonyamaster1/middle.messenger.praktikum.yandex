@@ -6,6 +6,7 @@ import { createErrorMessage } from '../../utils/CreateErrorMessage';
 import { getFormData } from '../../utils/getFormData';
 import template from './registry.hbs';
 import * as styles from '../../../style.scss';
+import AuthController from '../../controllers/AuthController';
 
 
 interface IRegistryProps {
@@ -18,12 +19,11 @@ export default class RegistryPage extends Block {
   }
 
   protected initChildren(): void {
-    this.children.enterbtn = new Button({
-      text: 'Enter',
-      type: 'submit',
-      class: 'btn',
-      link: '../User/user.html',
+    this.children.registration = new Button({
+      text: 'Registration',
+      class: 'button',
       events: {
+        // click: () => this.onSubmit(),
         click: (e) => {
           e.preventDefault();
           const formData = getFormData('registry-form');
@@ -51,21 +51,7 @@ export default class RegistryPage extends Block {
           if (!passwordRegExp.test(formData.password)) {
             return createErrorMessage(e.target, validation.password.message);
           }
-          location.href = '/pages/User/user.html';
-        },
-      },
-    });
-
-    this.children.toauthbtn = new Button({
-      text: 'Sign In',
-      type: 'button',
-      class: 'sign-up-link',
-      link: '../Error5/error5.html',
-      events: {
-        click: (e) => {
-          e.preventDefault();
-          getFormData('registry-form');
-          location.href = '/pages/Error5/error5.html';
+          AuthController.signUp(formData);
         },
       },
     });
@@ -189,6 +175,19 @@ export default class RegistryPage extends Block {
         },
       },
     });
+  }
+
+  onSubmit() {
+    const values = Object
+      .values(this.children)
+      .filter(child => child instanceof Input)
+      .map((child) => ([(child as Input).getName(), (child as Input).getValue()]));
+
+    const data = Object.fromEntries(values);
+
+    console.log(data, 'signup data');
+
+    AuthController.signUp(data);
   }
 
   render() {

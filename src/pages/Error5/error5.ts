@@ -18,7 +18,6 @@ export default class Error5Page extends Block {
       text: 'Back to chats',
       type: 'button',
       class: 'error-link',
-      link: '../Chats/chats.html',
       events: {
         click: (e) => {
           e.preventDefault();

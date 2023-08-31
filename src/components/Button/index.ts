@@ -4,9 +4,8 @@ import template from './button.hbs';
 
 interface IButtonProps {
   text: string;
-  link: string;
-  type: string;
-  class: string;
+  type?: string;
+  class?: string;
   events?: {
     click?: (e: Event) => undefined | void,
   };

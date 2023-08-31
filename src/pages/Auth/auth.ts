@@ -1,11 +1,14 @@
 import template from './auth.hbs';
 import { validation } from '../../constants/validation';
 import Button from '../../components/Button';
+// import { Link } from '../../components/Link';
 import Input from '../../components/Input';
 import Block from '../../utils/Block';
 import { createErrorMessage } from '../../utils/CreateErrorMessage';
 import { getFormData } from '../../utils/getFormData';
 import * as styles from '../../../style.scss';
+import AuthController from '../../controllers/AuthController';
+import router from '../../utils/router';
 
 
 interface IAuthProps {
@@ -20,10 +23,12 @@ export default class AuthPage extends Block {
   protected initChildren(): void {
     this.children.enterbtn = new Button({
       text: 'Enter',
-      link: '../Chats/chats.html',
       type: 'submit',
-      class: 'btn',
+      class: 'button',
       events: {
+        // click: () => {
+        //   this.onSubmit();
+        // },
         click: (e: any) => {
           e.preventDefault();
           const formData = getFormData('auth-form');
@@ -35,8 +40,8 @@ export default class AuthPage extends Block {
           if (!passwordRegExp.test(formData.password)) {
             return createErrorMessage(e.target, validation.password.message);
           }
+          AuthController.signIn(formData);
 
-          location.href = '/pages/Chats/chats.html';
         },
       },
     });
@@ -44,12 +49,10 @@ export default class AuthPage extends Block {
     this.children.toregistrybtn = new Button({
       text: 'Sign Up',
       type: 'button',
-      class: 'sign-in-link',
-      link: '../Registry/registry.html',
+      class: 'button',
       events: {
-        click: (e) => {
-          e.preventDefault();
-          location.href = '/pages/Registry/registry.html';
+        click: () => {
+          router.go('/signup');
         },
       },
     });
@@ -93,6 +96,21 @@ export default class AuthPage extends Block {
         },
       },
     });
+  }
+
+
+
+  onSubmit() {
+    const values = Object
+      .values(this.children)
+      .filter(child => child instanceof Input)
+      .map((child) => ([(child as Input).getName(), (child as Input).getValue()]));
+
+    const data = Object.fromEntries(values);
+
+    console.log(data, 'signin data');
+
+    AuthController.signIn(data);
   }
 
   render() {

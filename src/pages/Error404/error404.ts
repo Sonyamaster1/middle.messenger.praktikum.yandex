@@ -16,7 +16,6 @@ export default class Error404Page extends Block {
   protected initChildren(): void {
     this.children.button = new Button({
       text: 'Back to chats',
-      link: '../Chats/chats.html',
       type: 'button',
       class: 'error-link',
       events: {
