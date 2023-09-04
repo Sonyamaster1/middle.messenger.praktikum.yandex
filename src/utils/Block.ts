@@ -19,11 +19,11 @@ export default class Block {
 
   _meta: { props: Props };
 
-  protected props: Props;
+  protected props: Props | any;
 
   private eventBus: () => EventBus;
 
-  protected children: Record<string, Block>;
+  protected children: Record<string, Block | Block[]>;
 
   constructor(propsAndChildren: Props = {}, tagName: string = 'div') {
     this.tagName = tagName;
@@ -65,7 +65,7 @@ export default class Block {
   }
 
 
-  private init(): void {
+  protected init(): void {
     this.createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
@@ -108,7 +108,7 @@ export default class Block {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  componentDidUpdate(_oldProps: Props, _newProps: Props) {
+  protected componentDidUpdate(_oldProps: Props, _newProps: Props) {
     return true;
   }
 

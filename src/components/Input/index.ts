@@ -22,6 +22,10 @@ export default class Input extends Block {
     return (this.element as HTMLInputElement).name;
   }
 
+  public setValue(value: string) {
+    return (this.element as HTMLInputElement).value = value;
+  }
+
   public getValue() {
     return (this.element as HTMLInputElement).value;
   }

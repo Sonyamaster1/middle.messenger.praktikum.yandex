@@ -9,7 +9,7 @@ import template from './user.hbs';
 import { AvatarInput } from '../../components/AvatarInput';
 import UserController from '../../controllers/UserController';
 import AuthController from '../../controllers/AuthController';
-import { State, withStore } from '../../utils/Store';
+import { IState, withStore } from '../../utils/Store';
 
 interface IUserProps {
   className: string;
@@ -17,7 +17,8 @@ interface IUserProps {
 
 export default class UserPage extends Block {
   constructor(props: IUserProps) {
-    super({ props });
+    super(props);
+    this.props = props;
   }
 
   protected initChildren(): void {
@@ -181,10 +182,8 @@ export default class UserPage extends Block {
       text: 'Change password',
       class: 'button',
       events: {
-        click: (e) => {
-          e.preventDefault();
-          let data = getFormData('password-form');
-          UserController.putPassword(data);
+        click: () => {
+          this.onSubmit();
         },
       },
     });
@@ -213,7 +212,7 @@ export default class UserPage extends Block {
     });
 
     this.children.inputnewpass = new Input({
-      name: 'NewPassword',
+      name: 'newPassword',
       placeholder: 'New Password',
       type: 'password',
       class: 'input',
@@ -240,6 +239,17 @@ export default class UserPage extends Block {
     AuthController.fetchUser();
   }
 
+  onSubmit() {
+    const values = Object
+      .values(this.children)
+      .filter(child => child instanceof Input)
+      .map((child) => ([(child as Input).getName(), (child as Input).getValue()]));
+
+    const data = Object.fromEntries(values);
+
+    UserController.putPassword(data);
+  }
+
   render() {
     return this.compile(template, {
       styles,
@@ -250,7 +260,7 @@ export default class UserPage extends Block {
     });
   }
 }
-function mapStateToProps(state: State) {
+function mapStateToProps(state: IState) {
   return { ...state.user };
 }
 

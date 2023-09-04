@@ -1,28 +1,5 @@
-.chats-container {
+.messenger-page {
+    height: 100vh;
     display: flex;
-    justify-content: space-between;
-    padding: 20px;
-}
-
-.chats {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 20px;
-}
-
-.new-chat-button {
-    gap: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.message .message-form {
-    display: flex;
-    gap: 15px;
-    padding: 20px;
-    justify-content: space-between;
-    flex-direction: column;
+    flex-flow: nowrap;
 }

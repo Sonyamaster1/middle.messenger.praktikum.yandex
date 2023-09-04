@@ -2,6 +2,7 @@ import AuthApi from '../api/AuthApi';
 import { ISignInData, ISignUpData } from '../api/AuthApi/AuthApi.interfaces';
 import store from '../utils/Store';
 import Router from '../utils/router';
+import MessageController from './MessageController';
 
 class AuthController {
   api: any;
@@ -31,18 +32,30 @@ class AuthController {
     }
   }
 
+
   async logout() {
     try {
+      MessageController.closeAll();
+
       await this.api.logout();
 
-      store.set('user', undefined);
-
       Router.go('/');
-
-    } catch (error) {
-      console.log(error);
+    } catch (e: any) {
+      console.error(e.message);
     }
   }
+  //   async logout() {
+  //     try {
+  //       await this.api.logout();
+
+  //       store.set('user', undefined);
+
+  //       Router.go('/');
+
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
 
   async fetchUser() {
     try {

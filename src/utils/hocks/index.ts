@@ -10,6 +10,6 @@ export function withRouter(Component: typeof Block) {
   };
 }
 
-export interface PropsWithRouter {
+export interface IPropsWithRouter {
   router: typeof router;
 }
