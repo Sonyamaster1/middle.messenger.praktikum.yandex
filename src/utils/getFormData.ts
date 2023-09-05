@@ -4,6 +4,5 @@ export function getFormData(formId: string): any {
   for (let [key, value] of formData.entries()) {
     authFormData[key] = value;
   }
-  console.log(authFormData);
   return authFormData;
 }

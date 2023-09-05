@@ -1,12 +1,17 @@
 import { IUser } from '../api/AuthApi/AuthApi.interfaces';
+import { ChatInfo } from '../api/ChatsApi/ChatsApi.interfaces';
+import { Message } from '../components/Message';
 import Block from './Block';
 import EventBus from './EventBus';
 import { set } from './helpers';
 import { isEqual } from './isEqual';
 
 
-export interface State {
+export interface IState {
   user?: IUser;
+  chats?: ChatInfo[];
+  messages?: Record<number, Message[]>;
+  selectedChat?: number;
 }
 
 enum StorageEventE {
@@ -14,11 +19,9 @@ enum StorageEventE {
 }
 
 class Store extends EventBus {
-  private state: State = {};
-
-  getState() {
-    return this.state;
-  }
+  private state: IState = {
+    chats: [],
+  };
 
   set(path: string, value: unknown) {
     set(this.state, path, value);
@@ -27,29 +30,36 @@ class Store extends EventBus {
 
     this.emit(StorageEventE.UpdateState, this.state);
   }
+
+  public getState() {
+    return this.state;
+  }
 }
 
 const store = new Store();
 
-export const withStore =
-    (
-      mapStateToProps: (state: State) => Record<string, unknown>,
-    ) =>
-      (Component: typeof Block) => {
-        let state: State;
-        return class extends Component {
-          constructor(props: any) {
-            state = mapStateToProps(store.getState());
-            super({ ...props, ...state });
-            store.on(StorageEventE.UpdateState, () => {
-              console.log('store on');
-              const newState = mapStateToProps(store.getState());
-              if (!isEqual(state, newState)) {
-                this.setProps({ ...newState });
-                state = newState;
-              }
-            });
+export function withStore(mapStateToProps: (state: IState) => Record<string, unknown>) {
+  return function wrap(Component: typeof Block) {
+    return class WithStore extends Component {
+
+      constructor(props: any) {
+        let previousState = mapStateToProps(store.getState());
+
+        super({ ...props, ...previousState });
+
+        store.on(StorageEventE.UpdateState, () => {
+          console.log('store on');
+          const newState = mapStateToProps(store.getState());
+          if (!isEqual(previousState, newState)) {
+            this.setProps({ ...newState });
+            previousState = newState;
           }
-        };
-      };
+        });
+
+      }
+
+    };
+
+  };
+}
 export default store;

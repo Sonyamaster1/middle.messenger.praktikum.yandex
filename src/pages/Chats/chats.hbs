@@ -1,25 +1,6 @@
 <main>
-    <div class="chats-container">
-        <div class="chats">
-            {{{buttonuser}}}
-            {{{buttonlogout}}}
-                <form class="new-chat-button" id="newchat-id">
-                    {{{inputnewchat}}}
-                    {{{buttonnewchat}}}
-                </form>
-
-            {{{mychat}}}
-
-        </div>
-        <div class="message">
-            {{{mymessage}}}
-
-            <form class="message" id="message-form">
-                {{{inputmessage}}}
-                {{{button}}}
-            </form>
-
-        </div>
-        <p id="error" class="error"></p>
-    </div>
+    <div class="{{ styles.messenger-page }}">
+    {{{chatsList}}}
+    {{{messenger}}}
+</div>
 </main>

@@ -1,29 +1,38 @@
 import { API } from '../api';
-import { IOneChatInt, IChatDataInt } from './ChatsApi.interfaces';
+import { ChatInfo, User } from './ChatsApi.interfaces';
 
-export default class ChatsApi extends API {
-
+export class ChatsApi extends API {
   constructor() {
     super('/chats');
   }
 
-  createChat(data: IChatDataInt): Promise<unknown> {
-    return this.http.post('/', data);
+  create(title: string) {
+    return this.http.post('/', { title });
   }
 
-  addUser(data: any): Promise<unknown> {
-    return this.http.put('/users', data);
+  delete(id: number): Promise<unknown> {
+    return this.http.delete('/', { chatId: id });
   }
 
-  deleteUser(data: any): Promise<unknown> {
-    return this.http.delete('/users', data);
-  }
 
-  getChat(chatId: string): Promise<unknown> {
-    return this.http.post('/token/' + chatId);
-  }
-
-  readChats(): Promise<IOneChatInt | unknown> {
+  read(): Promise<ChatInfo[]> {
     return this.http.get('/');
   }
+
+  getUsers(id: number): Promise<Array<User & { role: string }>> {
+    return this.http.get(`/${id}/users`);
+  }
+
+  addUsers(id: number, users: number[]): Promise<unknown> {
+    return this.http.put('/users', { users, chatId: id });
+  }
+
+  async getToken(id: number): Promise<string> {
+    const response = await this.http.post<{ token: string }>(`/token/${id}`);
+
+    return response.token;
+  }
+
 }
+
+export default new ChatsApi();

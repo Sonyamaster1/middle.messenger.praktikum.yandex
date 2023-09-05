@@ -1,5 +1,5 @@
 import AuthController from './controllers/AuthController';
-// import ChatsController from './controllers/ChatsController';
+import ChatsController from './controllers/ChatsController';
 import AuthPage from './pages/Auth/auth';
 import ChatsPage from './pages/Chats/chats';
 import Error404Page from './pages/Error404/error404';
@@ -37,6 +37,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   try {
     await AuthController.fetchUser();
+    await ChatsController.fetchChats();
     router.start();
 
     if (!isProtectedRoute) {

@@ -1,14 +1,13 @@
 import template from './auth.hbs';
 import { validation } from '../../constants/validation';
 import Button from '../../components/Button';
-// import { Link } from '../../components/Link';
 import Input from '../../components/Input';
 import Block from '../../utils/Block';
 import { createErrorMessage } from '../../utils/CreateErrorMessage';
-import { getFormData } from '../../utils/getFormData';
 import * as styles from '../../../style.scss';
 import AuthController from '../../controllers/AuthController';
 import router from '../../utils/router';
+import { ISignInData } from '../../api/AuthApi/AuthApi.interfaces';
 
 
 interface IAuthProps {
@@ -26,23 +25,23 @@ export default class AuthPage extends Block {
       type: 'submit',
       class: 'button',
       events: {
-        // click: () => {
-        //   this.onSubmit();
-        // },
-        click: (e: any) => {
-          e.preventDefault();
-          const formData = getFormData('auth-form');
-          let loginReg = validation.login.regExp;
-          if (!loginReg.test(formData.login)) {
-            createErrorMessage(e.target, validation.login.message);
-          }
-          const passwordRegExp = validation.password.regExp;
-          if (!passwordRegExp.test(formData.password)) {
-            return createErrorMessage(e.target, validation.password.message);
-          }
-          AuthController.signIn(formData);
-
+        click: () => {
+          this.onSubmit();
         },
+        // click: (e: any) => {
+        //   e.preventDefault();
+        //   const formData = getFormData('auth-form');
+        //   let loginReg = validation.login.regExp;
+        //   if (!loginReg.test(formData.login)) {
+        //     createErrorMessage(e.target, validation.login.message);
+        //   }
+        //   const passwordRegExp = validation.password.regExp;
+        //   if (!passwordRegExp.test(formData.password)) {
+        //     return createErrorMessage(e.target, validation.password.message);
+        //   }
+        //   AuthController.signIn(formData);
+
+        // },
       },
     });
 
@@ -98,8 +97,6 @@ export default class AuthPage extends Block {
     });
   }
 
-
-
   onSubmit() {
     const values = Object
       .values(this.children)
@@ -108,9 +105,7 @@ export default class AuthPage extends Block {
 
     const data = Object.fromEntries(values);
 
-    console.log(data, 'signin data');
-
-    AuthController.signIn(data);
+    AuthController.signIn(data as ISignInData);
   }
 
   render() {

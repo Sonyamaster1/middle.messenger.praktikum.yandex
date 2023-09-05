@@ -2,7 +2,7 @@ import Block from '../../utils/Block';
 import { withRouter } from '../../utils/hocks';
 import template from './link.hbs';
 
-interface LinkProps {
+interface ILinkProps {
   to: string;
   label: string;
   events?: {
@@ -11,7 +11,7 @@ interface LinkProps {
 }
 
 class BaseLink extends Block {
-  constructor(props: LinkProps) {
+  constructor(props: ILinkProps) {
     super({
       ...props,
       events: {

@@ -2,27 +2,26 @@
     <section class="user-section">
         <h2 class="title">Change a user</h2>
         <div class="container">
-            {{!-- пробовала передавать так: {{#if props.isAvatar}} но не работает тоже --}}
-            {{#if props.avatar}}
+            {{#if props.isAvatar}}
+            <div class="{{styles.imgContainer}}">
                 <img
-                    class={{styles.avatar}}
-                    src={{props.avatar}}
-                    width="100"
-                    height="100"
+                    class='{{styles.avatar}}'
+                    src='{{props.avatar}}'
+                    width="200"
+                    height="200"
                     alt="avatar"
                 />
             {{else}}
                 <div class={{styles.avatar}} width="450" height="450">Аватар
                     отсутствует</div>
+                    </div>
             {{/if}}
-            <form class="user-form" id="avatar-form">
+            <div class="user-form">
                 {{{logoutbtn}}}
-                {{{inputavatar}}}
+                {{{inputavatar value=this.value}}}
                 <input id="avatar" type="file" name="avatar" accept="image/*" />
 
                 {{{buttonavatar}}}
-            </form>
-            <form class="user-form" id="settings-registry-form">
                 {{{inputemail}}}
                 {{{inputlogin}}}
                 {{{inputfirst_name}}}
@@ -33,14 +32,11 @@
 
                 {{{editbutton}}}
                 {{{buttonlogout}}}
-            </form>
-            <form class="user-form" id="password-form">
                 {{{inputoldpass}}}
                 {{{inputnewpass}}}
                 {{{buttonchangepass}}}
-            </form>
+            </div>
             <p id="error" class="error"></p>
-            {{!-- {{{button}}} --}}
         </div>
     </section>
 </main>

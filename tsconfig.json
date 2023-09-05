@@ -19,5 +19,5 @@
       "noUnusedParameters": true,
       "noFallthroughCasesInSwitch": true
     },
-    "include": ["src"]
+    "include": ["src", "server.ts", "vite-plugin-handlebars-precompile.ts", "vite.config.ts"]
   }

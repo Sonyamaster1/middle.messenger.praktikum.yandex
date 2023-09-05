@@ -1,21 +1,19 @@
 import Block from '../../utils/Block';
 import template from './message.hbs';
+import styles from './message.module.scss';
 
 interface IMessageProps {
-  user_id: number;
   content: string;
+  isMine: boolean;
 }
 
-export default class Message extends Block {
+export class Message extends Block {
   constructor(props: IMessageProps) {
     super(props);
     this.props = props;
   }
 
-  protected initChildren(): void {
-  }
-
-  render(): DocumentFragment {
-    return this.compile(template, { ...this.props });
+  protected render(): DocumentFragment {
+    return this.compile(template, { ...this.props, styles });
   }
 }
