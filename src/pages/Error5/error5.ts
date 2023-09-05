@@ -1,7 +1,7 @@
 import Button from '../../components/Button';
 import Block from '../../utils/Block';
 import template from './error5.hbs';
-import * as styles from '../../../style.scss';
+import styles from './error5.module.scss';
 
 interface IError5Props {
   className: string;

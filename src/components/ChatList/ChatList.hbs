@@ -1,10 +1,11 @@
 <div class="{{ styles.chats-list }}">
+    <h4>Список чатов</h4>
 {{#if isLoading }}
     {{#each chats}}
-        {{{this}}}
+        {{{this.title}}}
     {{/each}}
     {{{profileLink}}}
 {{else}}
   Loading...
 {{/if}}
-<div>
+</div>

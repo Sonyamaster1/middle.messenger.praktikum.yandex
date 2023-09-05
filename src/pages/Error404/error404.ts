@@ -1,7 +1,7 @@
 import Button from '../../components/Button';
 import Block from '../../utils/Block';
 import template from './error404.hbs';
-import * as styles from '../../../style.scss';
+import styles from './error404.module.scss';
 
 interface IError404Props {
   className: string;

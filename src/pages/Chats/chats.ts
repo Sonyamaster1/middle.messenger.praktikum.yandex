@@ -11,8 +11,8 @@ export default class ChatsPage extends Block {
     super({});
   }
 
-  protected init() {
-    this.children.chatsList = new ChatsList({ isLoaded: false });
+  protected initChildren() {
+    this.children.chatsList = new ChatsList({ isLoading: true });
 
     this.children.messenger = new Messenger({});
 

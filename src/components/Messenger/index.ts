@@ -9,7 +9,7 @@ import styles from './messenger.module.scss';
 
 
 interface IMessengerProps {
-  selectedChat?: number;
+  selectedChat: number;
   messages: MessageInfo[] | any;
   userId?: number;
 }
@@ -21,7 +21,9 @@ export class MessengerBase extends Block {
   }
 
   protected initChildren() {
-    this.children.messages = this.createMessages(this.props);
+    if (this.children.messages) {
+      this.children.messages = this.createMessages(this.props);
+    }
 
     this.children.input = new Input({
       type: 'text',
@@ -46,15 +48,20 @@ export class MessengerBase extends Block {
   }
 
   protected componentDidUpdate( newProps: IMessengerProps): boolean {
-    this.children.messages = this.createMessages(newProps);
-
-    return true;
+    if (this.children.messages) {
+      this.children.messages = this.createMessages(newProps);
+      return true;
+    }
+    return false;
   }
 
   private createMessages(props: IMessengerProps) {
-    return props.messages.map((data: any) => {
-      return new Message({ ...data, isMine: props.userId === data.user_id });
-    });
+    if (props && props.messages) {
+      return props.messages.map((data: any) => {
+        return new Message({ ...data, isMine: props.userId === data.user_id });
+      });
+    }
+    return;
   }
 
   protected render(): DocumentFragment {
