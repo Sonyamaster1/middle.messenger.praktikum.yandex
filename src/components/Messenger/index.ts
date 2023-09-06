@@ -15,44 +15,41 @@ interface IMessengerProps {
 }
 
 export class MessengerBase extends Block {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(props: IMessengerProps) {
     super(props);
-    this.props = props;
   }
 
   protected initChildren() {
     if (this.children.messages) {
       this.children.messages = this.createMessages(this.props);
-    }
 
-    this.children.input = new Input({
-      type: 'text',
-      placeholder: 'Сообщение',
-      name: 'message',
-    });
+      this.children.input = new Input({
+        type: 'text',
+        placeholder: 'Сообщение',
+        name: 'message',
+      });
 
-    this.children.button = new Button({
-      text: 'Отправить',
-      type: 'button',
-      events: {
-        click: () => {
-          const input = this.children.input as Input;
-          const message = input.getValue();
+      this.children.button = new Button({
+        text: 'Отправить',
+        type: 'button',
+        events: {
+          click: () => {
+            const input = this.children.input as Input;
+            const message = input.getValue();
 
-          input.setValue('');
+            input.setValue('');
 
-          MessagesController.sendMessage(this.props.selectedChat!, message);
+            MessagesController.sendMessage(this.props.selectedChat!, message);
+          },
         },
-      },
-    });
+      });
+    }
   }
 
   protected componentDidUpdate( newProps: IMessengerProps): boolean {
-    if (this.children.messages) {
-      this.children.messages = this.createMessages(newProps);
-      return true;
-    }
-    return false;
+    this.children.messages = this.createMessages(newProps);
+    return true;
   }
 
   private createMessages(props: IMessengerProps) {

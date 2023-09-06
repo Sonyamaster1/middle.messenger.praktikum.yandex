@@ -6,6 +6,8 @@ import { withStore } from '../../utils/Store';
 import { Chat } from '../Chat';
 import { Link } from '../Link';
 import styles from './ChatList.module.scss';
+import Button from '../Button';
+import AuthController from '../../controllers/AuthController';
 
 interface IChatsListProps {
   chats: ChatInfo[];
@@ -15,30 +17,28 @@ interface IChatsListProps {
 class ChatsListBase extends Block {
   constructor(props: IChatsListProps) {
     super({ ...props });
-    this.props = props;
   }
 
   protected initChildren() {
-    console.log('тут еще есть');
-    if (this.children.chats) {
-      console.log('а тут уже нет');
-      this.children.chats = this.createChats(this.props);
-      this.children.profileLink = new Link({ to: '/profile', label: 'Профиль' });
-    }
-    return;
+    this.children.chats = this.createChats(this.props);
+    this.children.profileLink = new Link({ to: '/profile', label: 'Профиль' });
+    this.children.button = new Button({
+      text: 'Logout',
+      class: 'button',
+      type: 'button',
+      events: {
+        click: () => {AuthController.logout();},
+      },
+    });
   }
 
   protected componentDidUpdate( newProps: IChatsListProps): boolean {
-    if (this.children.chats) {
-      this.children.chats = this.createChats(newProps);
-      return true;
-    }
-    return false;
+    this.children.chats = this.createChats(newProps);
+    return true;
   }
 
   private createChats(props: IChatsListProps) {
-    return props && props.chats.map((data: any) => {
-      console.log(data);
+    return props.chats && props.chats.map((data: any) => {
       return new Chat({
         ...data,
         events: {

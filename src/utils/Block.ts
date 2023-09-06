@@ -32,9 +32,9 @@ export default class Block {
     this._meta = {
       props,
     };
+    this.props = this._makePropsProxy(props);
     this.children = children;
     this.initChildren();
-    this.props = this._makePropsProxy(props);
     this.eventBus = () => eventBus;
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
@@ -200,46 +200,6 @@ export default class Block {
     }
   }
 
-  //   compile(template: (context: any) => string, context: any) {
-  //   const fragment = this._createDocumentElement(
-  //     'template',
-  //   ) as HTMLTemplateElement;
-
-  //     Object.entries(this.children).forEach(([key, child]) => {
-  //       if (Array.isArray(child)) {
-  //         context[key] = child.map(
-  //           (ch) => `<div data-id="id-${ch.id}"></div>`,
-  //         );
-
-  //         return;
-  //       }
-
-  //       context[key] = `<div data-id="id-${child.id}"></div>`;
-  //     });
-
-  //     const htmlString = template(context);
-  //     fragment.innerHTML = htmlString;
-
-
-
-  //     Object.entries(this.children).forEach(([key, child]) => {
-  //       if (Array.isArray(child)) {
-  //         context[key] = child.map((ch) => `<div data-id="id-${ch.id}"></div>`);
-  //         return;
-  //       }
-
-  //       const stub = fragment.content.querySelector(`[data-id="id-${child.id}"]`);
-
-  //       if (!stub) {
-  //         return;
-  //       }
-
-  //       stub.replaceWith(child.getContent()!);
-  //     });
-
-  //     return fragment.content;
-  //   }
-
   protected compile(template: (context: any) => string, context: any) {
     const fragment = this._createDocumentElement(
       'template',
@@ -275,7 +235,6 @@ export default class Block {
         replaceStub(component);
       }
     });
-    console.log(fragment.content);
     return fragment.content;
   }
 

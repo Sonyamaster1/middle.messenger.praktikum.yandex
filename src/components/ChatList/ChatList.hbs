@@ -2,10 +2,11 @@
     <h4>Список чатов</h4>
 {{#if isLoading }}
     {{#each chats}}
-        {{{this.title}}}
+        {{{this}}}
     {{/each}}
     {{{profileLink}}}
 {{else}}
   Loading...
 {{/if}}
+{{{button}}}
 </div>
