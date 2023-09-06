@@ -4,12 +4,13 @@ import { validation } from '../../constants/validation';
 import Block from '../../utils/Block';
 import { createErrorMessage } from '../../utils/CreateErrorMessage';
 import { getFormData } from '../../utils/getFormData';
-import * as styles from '../../../style.scss';
+import styles from './user.module.scss';
 import template from './user.hbs';
 import { AvatarInput } from '../../components/AvatarInput';
 import UserController from '../../controllers/UserController';
 import AuthController from '../../controllers/AuthController';
 import { IState, withStore } from '../../utils/Store';
+import { Link } from '../../components/Link';
 
 interface IUserProps {
   className: string;
@@ -60,6 +61,8 @@ export default class UserPage extends Block {
         click: () => { AuthController.logout(); },
       },
     });
+
+    this.children.buttontomessenger = new Link({ to: '/messenger', label: 'To Messenger' });
 
     this.children.inputfirst_name = new Input({
       name: 'first_name',
@@ -261,6 +264,7 @@ export default class UserPage extends Block {
   }
 }
 function mapStateToProps(state: IState) {
+  console.log(state);
   return { ...state.user };
 }
 

@@ -4,7 +4,7 @@ import Input from '../../components/Input';
 import Block from '../../utils/Block';
 import { createErrorMessage } from '../../utils/CreateErrorMessage';
 import template from './registry.hbs';
-import * as styles from '../../../style.scss';
+import styles from './registry.module.scss';
 import AuthController from '../../controllers/AuthController';
 import { ISignUpData } from '../../api/AuthApi/AuthApi.interfaces';
 
@@ -24,35 +24,6 @@ export default class RegistryPage extends Block {
       class: 'button',
       events: {
         click: () => this.onSubmit(),
-        // click: (e) => {
-        //   e.preventDefault();
-        //   const formData = getFormData('registry-form');
-        //   let emailReg = validation.email.regExp;
-        //   if (!emailReg.test(formData.email)) {
-        //     createErrorMessage(e.target, validation.email.message);
-        //   }
-        //   const loginRegExp = validation.login.regExp;
-        //   if (!loginRegExp.test(formData.login)) {
-        //     createErrorMessage(e.target, validation.login.message);
-        //   }
-        //   const firstRegExp = validation.first_name.regExp;
-        //   if (!firstRegExp.test(formData.first_name)) {
-        //     createErrorMessage(e.target, validation.first_name.message);
-        //   }
-        //   const secondRegExp = validation.second_name.regExp;
-        //   if (!secondRegExp.test(formData.second_name)) {
-        //     createErrorMessage(e.target, validation.second_name.message);
-        //   }
-        //   const phoneRegExp = validation.phone.regExp;
-        //   if (!phoneRegExp.test(formData.phone)) {
-        //     createErrorMessage(e.target, validation.phone.message);
-        //   }
-        //   const passwordRegExp = validation.password.regExp;
-        //   if (!passwordRegExp.test(formData.password)) {
-        //     return createErrorMessage(e.target, validation.password.message);
-        //   }
-        //   AuthController.signUp(formData);
-        // },
       },
     });
 

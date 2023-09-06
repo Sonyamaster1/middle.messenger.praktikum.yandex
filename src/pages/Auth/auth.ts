@@ -28,20 +28,6 @@ export default class AuthPage extends Block {
         click: () => {
           this.onSubmit();
         },
-        // click: (e: any) => {
-        //   e.preventDefault();
-        //   const formData = getFormData('auth-form');
-        //   let loginReg = validation.login.regExp;
-        //   if (!loginReg.test(formData.login)) {
-        //     createErrorMessage(e.target, validation.login.message);
-        //   }
-        //   const passwordRegExp = validation.password.regExp;
-        //   if (!passwordRegExp.test(formData.password)) {
-        //     return createErrorMessage(e.target, validation.password.message);
-        //   }
-        //   AuthController.signIn(formData);
-
-        // },
       },
     });
 

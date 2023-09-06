@@ -9,52 +9,56 @@ import styles from './messenger.module.scss';
 
 
 interface IMessengerProps {
-  selectedChat?: number;
+  selectedChat: number;
   messages: MessageInfo[] | any;
   userId?: number;
 }
 
 export class MessengerBase extends Block {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(props: IMessengerProps) {
     super(props);
-    this.props = props;
   }
 
   protected initChildren() {
-    this.children.messages = this.createMessages(this.props);
+    if (this.children.messages) {
+      this.children.messages = this.createMessages(this.props);
 
-    this.children.input = new Input({
-      type: 'text',
-      placeholder: 'Сообщение',
-      name: 'message',
-    });
+      this.children.input = new Input({
+        type: 'text',
+        placeholder: 'Сообщение',
+        name: 'message',
+      });
 
-    this.children.button = new Button({
-      text: 'Отправить',
-      type: 'button',
-      events: {
-        click: () => {
-          const input = this.children.input as Input;
-          const message = input.getValue();
+      this.children.button = new Button({
+        text: 'Отправить',
+        type: 'button',
+        events: {
+          click: () => {
+            const input = this.children.input as Input;
+            const message = input.getValue();
 
-          input.setValue('');
+            input.setValue('');
 
-          MessagesController.sendMessage(this.props.selectedChat!, message);
+            MessagesController.sendMessage(this.props.selectedChat!, message);
+          },
         },
-      },
-    });
+      });
+    }
   }
 
   protected componentDidUpdate( newProps: IMessengerProps): boolean {
     this.children.messages = this.createMessages(newProps);
-
     return true;
   }
 
   private createMessages(props: IMessengerProps) {
-    return props.messages.map((data: any) => {
-      return new Message({ ...data, isMine: props.userId === data.user_id });
-    });
+    if (props && props.messages) {
+      return props.messages.map((data: any) => {
+        return new Message({ ...data, isMine: props.userId === data.user_id });
+      });
+    }
+    return;
   }
 
   protected render(): DocumentFragment {

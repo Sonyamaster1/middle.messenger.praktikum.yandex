@@ -7,18 +7,16 @@
                 <img
                     class='{{styles.avatar}}'
                     src='{{props.avatar}}'
-                    width="200"
-                    height="200"
                     alt="avatar"
                 />
             {{else}}
-                <div class={{styles.avatar}} width="450" height="450">Аватар
+                <div class='{{styles.avatar}}' width="450" height="450">Аватар
                     отсутствует</div>
                     </div>
             {{/if}}
             <div class="user-form">
                 {{{logoutbtn}}}
-                {{{inputavatar value=this.value}}}
+                {{{inputavatar}}}
                 <input id="avatar" type="file" name="avatar" accept="image/*" />
 
                 {{{buttonavatar}}}
@@ -35,6 +33,7 @@
                 {{{inputoldpass}}}
                 {{{inputnewpass}}}
                 {{{buttonchangepass}}}
+                {{{buttontomessenger}}}
             </div>
             <p id="error" class="error"></p>
         </div>

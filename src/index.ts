@@ -12,7 +12,7 @@ enum Routes {
   Index = '/',
   Register = '/signup',
   ProfilePage = '/profile',
-  Message = '/messanger',
+  Message = '/messenger',
   Error5 = '/error5',
   Error404 = '*',
 }

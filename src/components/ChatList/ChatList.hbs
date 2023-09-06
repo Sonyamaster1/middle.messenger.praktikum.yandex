@@ -1,4 +1,5 @@
 <div class="{{ styles.chats-list }}">
+    <h4>Список чатов</h4>
 {{#if isLoading }}
     {{#each chats}}
         {{{this}}}
@@ -7,4 +8,5 @@
 {{else}}
   Loading...
 {{/if}}
-<div>
+{{{button}}}
+</div>

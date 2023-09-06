@@ -14,7 +14,6 @@ export class ChatsApi extends API {
     return this.http.delete('/', { chatId: id });
   }
 
-
   read(): Promise<ChatInfo[]> {
     return this.http.get('/');
   }
