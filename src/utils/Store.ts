@@ -12,6 +12,7 @@ export interface IState {
   chats?: ChatInfo[];
   messages?: Record<number, Message[]>;
   selectedChat?: number;
+  selectedUser?: [];
 }
 
 enum StorageEventE {

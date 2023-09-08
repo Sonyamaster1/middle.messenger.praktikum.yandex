@@ -8,5 +8,21 @@
 {{else}}
   Loading...
 {{/if}}
-{{{button}}}
+<div>
+{{{logoutbutton}}}
+<form id="create-chat">
+{{{addnewchatbutton}}}
+{{{addnewchatinput}}}
+</form>
+<div class="{{ styles.remove-buttons }}">
+{{{removechat}}}
+</div>
+    <form id="id-by-input">
+    <div class="{{ styles.create-delete }}">
+        {{{logininput}}}
+        {{{getisbyinputbtn}}}
+        {{{removenewuser}}}
+    </div>
+    </form>
+</div>
 </div>

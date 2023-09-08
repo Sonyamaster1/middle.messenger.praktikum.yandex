@@ -50,3 +50,9 @@
     height: 120px;
     background: none;
 }
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

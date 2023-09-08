@@ -15,7 +15,7 @@ class AuthController {
     try {
       await this.api.signUp(data);
 
-      Router.go('/profile');
+      Router.go('/settings');
     } catch (error) {
       console.log(error);
     }

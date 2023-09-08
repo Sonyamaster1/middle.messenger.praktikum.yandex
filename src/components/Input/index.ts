@@ -7,6 +7,7 @@ interface IInputProps {
   placeholder?: string;
   type?: string;
   class?: string;
+  value?: string;
   events?: {
     blur?: (e: Event) => void;
     focus?: (e: Event) => void;

@@ -9,7 +9,7 @@ import template from './user.hbs';
 import { AvatarInput } from '../../components/AvatarInput';
 import UserController from '../../controllers/UserController';
 import AuthController from '../../controllers/AuthController';
-import { IState, withStore } from '../../utils/Store';
+import store, { IState, withStore } from '../../utils/Store';
 import { Link } from '../../components/Link';
 
 interface IUserProps {
@@ -69,6 +69,7 @@ export default class UserPage extends Block {
       placeholder: 'First Name',
       type: 'text',
       class: 'input',
+      value: `${store.getState().user?.first_name}`,
       events: {
         blur: (e: any) => {
           let reg = validation.first_name.regExp;
@@ -92,6 +93,7 @@ export default class UserPage extends Block {
       placeholder: 'Email',
       type: 'email',
       class: 'input',
+      value: `${store.getState().user?.email}`,
       events: {
         blur: (e: any) => {
           let reg = validation.email.regExp;
@@ -112,6 +114,7 @@ export default class UserPage extends Block {
       placeholder: 'Login',
       type: 'text',
       class: 'input',
+      value: `${store.getState().user?.login}`,
       events: {
         blur: (e: any) => {
           let reg = validation.login.regExp;
@@ -132,6 +135,7 @@ export default class UserPage extends Block {
       placeholder: 'Second Name',
       type: 'text',
       class: 'input',
+      value: `${store.getState().user?.second_name}`,
       events: {
         blur: (e: any) => {
           let reg = validation.second_name.regExp;
@@ -155,6 +159,7 @@ export default class UserPage extends Block {
       placeholder: 'Display Name',
       type: 'text',
       class: 'input',
+      value: `${store.getState().user?.display_name === null ? '' : store.getState().user?.display_name}`,
       events: {
         blur: () => {},
         focus: () => {},
@@ -166,6 +171,7 @@ export default class UserPage extends Block {
       placeholder: 'Phone',
       type: 'tel',
       class: 'input',
+      value: `${store.getState().user?.phone}`,
       events: {
         blur: (e: any) => {
           let reg = validation.phone.regExp;
