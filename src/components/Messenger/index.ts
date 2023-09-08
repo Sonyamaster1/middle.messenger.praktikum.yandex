@@ -37,8 +37,11 @@ export class MessengerBase extends Block {
           click: () => {
             const input = this.children.input as Input;
             const message = input.getValue();
+            if (message.length > 0) {
+              input.setValue('');
 
-            input.setValue('');
+            }
+            throw new Error('Поле message не должно быть пустым');
 
             MessagesController.sendMessage(this.props.selectedChat!, message);
           },

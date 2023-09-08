@@ -7,7 +7,7 @@ interface IButtonProps {
   type?: string;
   class?: string;
   events?: {
-    click?: (e: Event) => undefined | void,
+    click?: (e: Event) => any | void,
   };
 }
 

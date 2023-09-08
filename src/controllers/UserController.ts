@@ -20,6 +20,11 @@ class UserController {
   async putPassword(userData: string) {
     await this.api.putPassword(userData);
   }
+
+  async getUserId(userData: string) {
+    const userInfo = await this.api.getUserId(userData);
+    store.set('selectedUser', userInfo);
+  }
 }
 
 export default new UserController();

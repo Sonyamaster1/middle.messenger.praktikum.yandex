@@ -195,7 +195,7 @@ export default class Block {
 
     if (events) {
       Object.keys(events).forEach((eventName) => {
-        this.element?.addEventListener(eventName, events[eventName]);
+        this.element?.removeEventListener(eventName, events[eventName]);
       });
     }
   }

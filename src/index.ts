@@ -10,8 +10,8 @@ import router from './utils/router';
 
 enum Routes {
   Index = '/',
-  Register = '/signup',
-  ProfilePage = '/profile',
+  Register = '/sign-up',
+  ProfilePage = '/settings',
   Message = '/messenger',
   Error5 = '/error5',
   Error404 = '*',

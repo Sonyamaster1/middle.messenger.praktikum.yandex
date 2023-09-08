@@ -7,11 +7,11 @@ export class ChatsApi extends API {
   }
 
   create(title: string) {
-    return this.http.post('/', { title });
+    return this.http.post('/', { title }).catch((err => console.log(err)));
   }
 
   delete(id: number): Promise<unknown> {
-    return this.http.delete('/', { chatId: id });
+    return this.http.delete('/', { chatId: id }).catch((err => console.log(err)));
   }
 
   read(): Promise<ChatInfo[]> {
@@ -23,12 +23,15 @@ export class ChatsApi extends API {
   }
 
   addUsers(id: number, users: number[]): Promise<unknown> {
-    return this.http.put('/users', { users, chatId: id });
+    return this.http.put('/users', { users, chatId: id }).catch((err => console.log(err)));
+  }
+
+  removeUsers(id: number, users: number[]): Promise<unknown> {
+    return this.http.delete('/users', { users, chatId: id }).catch((err => console.log(err)));
   }
 
   async getToken(id: number): Promise<string> {
     const response = await this.http.post<{ token: string }>(`/token/${id}`);
-
     return response.token;
   }
 

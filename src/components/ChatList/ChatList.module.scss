@@ -1,5 +1,21 @@
 .chats-list  {
-    width: 300px;
+    width: 400px;
     height: 100%;
     background: #eebaba;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.remove-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px 0;
+}
+
+.create-delete {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    padding: 5px 0;
 }

@@ -37,7 +37,7 @@ export default class AuthPage extends Block {
       class: 'button',
       events: {
         click: () => {
-          router.go('/signup');
+          router.go('/sign-up');
         },
       },
     });
