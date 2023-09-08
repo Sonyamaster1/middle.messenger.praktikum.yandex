@@ -8,3 +8,10 @@
 [build]
   publish = "dist"
   command = "npm run build"
+[[redirects]]
+  from = "/settings"
+  to = "https://ya-praktikum.tech/api/v2/settings"
+  status = 200
+  force = true # COMMENT: ensure that we always redirect
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
