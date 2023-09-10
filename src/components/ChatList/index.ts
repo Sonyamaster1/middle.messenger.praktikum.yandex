@@ -73,7 +73,6 @@ class ChatsListBase extends Block {
 
   protected componentDidUpdate( newProps: IChatsListProps): boolean {
     this.children.chats = this.createChats(newProps);
-    this.children.removechat = this.deleteChats(newProps);
     this.children.getisbyinputbtn = this.createAndDeleteUsers();
     this.children.removenewuser = this.deleteUresfromChat();
     return true;
@@ -86,21 +85,6 @@ class ChatsListBase extends Block {
         events: {
           click: () => {
             ChatsController.selectChat(data.id);
-          },
-        },
-      });
-    });
-  }
-
-  private deleteChats(props: IChatsListProps) {
-    return props.chats && props.chats.map((data: any) => {
-      return new Button({
-        text: `Delete ${data.title} chat`,
-        class: 'button',
-        ...data,
-        events: {
-          click: () => {
-            ChatsController.delete(data && data.id);
           },
         },
       });

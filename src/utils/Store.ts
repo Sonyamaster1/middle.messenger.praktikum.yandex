@@ -4,7 +4,7 @@ import { Message } from '../components/Message';
 import Block from './Block';
 import EventBus from './EventBus';
 import { set } from './helpers';
-import { isEqual } from './isEqual';
+// import { isEqual } from './isEqual';
 
 
 export interface IState {
@@ -51,10 +51,10 @@ export function withStore(mapStateToProps: (state: IState) => Record<string, unk
         store.on(StorageEventE.UpdateState, () => {
           console.log('store on');
           const newState = mapStateToProps(store.getState());
-          if (!isEqual(previousState, newState)) {
-            this.setProps({ ...newState });
-            previousState = newState;
-          }
+          //   if (!isEqual(previousState, newState)) {
+          this.setProps({ ...newState });
+          previousState = newState;
+        //   }
         });
 
       }

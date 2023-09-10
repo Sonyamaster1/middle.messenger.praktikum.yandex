@@ -1,6 +1,9 @@
+import ChatsController from '../../controllers/ChatsController';
 import MessagesController, { IMessage as MessageInfo } from '../../controllers/MessageController';
+import UserController from '../../controllers/UserController';
 import Block from '../../utils/Block';
-import { withStore } from '../../utils/Store';
+import store, { withStore } from '../../utils/Store';
+import { getFormData } from '../../utils/getFormData';
 import Button from '../Button';
 import Input from '../Input';
 import { Message } from '../Message';
@@ -37,14 +40,38 @@ export class MessengerBase extends Block {
           click: () => {
             const input = this.children.input as Input;
             const message = input.getValue();
-            if (message.length > 0) {
+            if (message.length <= 0) {
+              throw new Error('Поле message не должно быть пустым');
+
+            } else {
+              MessagesController.sendMessage(this.props.selectedChat!, message);
               input.setValue('');
-
             }
-            throw new Error('Поле message не должно быть пустым');
-
-            MessagesController.sendMessage(this.props.selectedChat!, message);
           },
+        },
+      });
+
+      this.children.removebtn =  new Button({
+        text: 'Delete this chat',
+        class: 'button',
+        events: {
+          click: () => {
+            const currentId = store.getState().selectedChat;
+            if (currentId) {
+              ChatsController.delete(currentId);
+            }
+          },
+        },
+      });
+
+      this.children.logininput = new Input({
+        name: 'login',
+        placeholder: 'Login user',
+        type: 'text',
+        class: 'input',
+        events: {
+          blur: () => {},
+          focus: () => {},
         },
       });
     }
@@ -52,6 +79,8 @@ export class MessengerBase extends Block {
 
   protected componentDidUpdate( newProps: IMessengerProps): boolean {
     this.children.messages = this.createMessages(newProps);
+    this.children.getisbyinputbtn = this.createAndDeleteUsers();
+    this.children.removenewuser = this.deleteUresfromChat();
     return true;
   }
 
@@ -62,6 +91,77 @@ export class MessengerBase extends Block {
       });
     }
     return;
+  }
+
+  private createAndDeleteUsers() {
+    return new Button({
+      text: 'Add new user',
+      class: 'button',
+      type: 'button',
+      events: {
+        click:  async (e) => {
+          e.preventDefault();
+          let data = getFormData('id-by-input');
+          await UserController.getUserId(data);
+          const userId = store.getState().selectedUser?.map((el: any) => el.id);
+          if (userId?.length !== 1 || !userId) {
+            throw new Error('Пользователь не найден');
+          }
+          console.log(+userId);
+          const userList = store.getState().selectedChat;
+
+          const users: any = userList && ChatsController.getChatUsers(userList);
+
+          const selectedChatId = store.getState().selectedChat;
+
+          const selectedId = (await users).map((el: any) => el.id);
+
+          if (!selectedId.includes(+userId) && selectedChatId && selectedId.length <= 2) {
+            await ChatsController.addUserToChat(selectedChatId, +userId);
+            console.log('Пользователь добавлен');
+          } else {
+            console.log('Ошибка в добавлении пользователя');
+          }
+          if (userList) {
+            ChatsController.getChatUsers(userList);
+          }
+        },
+      },
+    });
+  }
+
+  private deleteUresfromChat() {
+    return new Button({
+      text: 'Delete user',
+      class: 'button',
+      type: 'button',
+      events: {
+        click: async (e) => {
+          e.preventDefault();
+          let data = getFormData('id-by-input');
+          await UserController.getUserId(data);
+          const userId = store.getState().selectedUser?.map((el: any) => el.id);
+          if (userId?.length !== 1 || !userId) {
+            throw new Error('Пользователь не найден');
+          }
+          console.log(+userId);
+          const userList = store.getState().selectedChat;
+
+          const users: any = userList && ChatsController.getChatUsers(userList);
+
+          const selectedChatId = store.getState().selectedChat;
+
+          const selectedId = (await users).map((el: any) => el.id);
+          if (selectedId.includes(+userId) && selectedChatId && userId) {
+            await ChatsController.deleteUserFromChat(selectedChatId, +userId);
+            console.log('Пользователь удален');
+          }
+          if (userList) {
+            ChatsController.getChatUsers(userList);
+          }
+        },
+      },
+    });
   }
 
   protected render(): DocumentFragment {

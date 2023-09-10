@@ -8,16 +8,16 @@ export default class AuthApi extends API {
   }
 
   signUp(data: ISignUpData): Promise<unknown> {
-    return this.http.post('/signup', data).catch((err => console.log(err)));
+    return this.http.post('/signup', data);
   }
 
   signIn(data: ISignInData): Promise<unknown> {
     console.log(data);
-    return this.http.post('/signin', data).catch((err => console.log(err)));
+    return this.http.post('/signin', data);
   }
 
   logout(): Promise<unknown> {
-    return this.http.post('/logout').catch((err => console.log(err)));
+    return this.http.post('/logout');
   }
 
   getUser(): Promise<unknown> {
