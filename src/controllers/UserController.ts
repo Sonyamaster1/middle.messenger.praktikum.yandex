@@ -9,21 +9,37 @@ class UserController {
   }
 
   async putUserInfo(userData: string) {
-    await this.api.putUserInfo(userData);
+    try {
+      await this.api.putUserInfo(userData);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async putUserAvatar(userData: FormData) {
-    const newUser = await this.api.putUserAvatar(userData);
-    store.set('user', newUser);
+    try {
+      const newUser = await this.api.putUserAvatar(userData);
+      store.set('user', newUser);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async putPassword(userData: string) {
-    await this.api.putPassword(userData);
+    try {
+      await this.api.putPassword(userData);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async getUserId(userData: string) {
-    const userInfo = await this.api.getUserId(userData);
-    store.set('selectedUser', userInfo);
+    try {
+      const userInfo = await this.api.getUserId(userData);
+      store.set('selectedUser', userInfo);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
