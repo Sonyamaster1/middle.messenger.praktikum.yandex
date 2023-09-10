@@ -17,9 +17,9 @@ interface IUserProps {
 }
 
 export default class UserPage extends Block {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(props: IUserProps) {
     super(props);
-    this.props = props;
   }
 
   protected initChildren(): void {

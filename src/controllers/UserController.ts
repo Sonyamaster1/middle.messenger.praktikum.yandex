@@ -14,7 +14,7 @@ class UserController {
 
   async putUserAvatar(userData: FormData) {
     const newUser = await this.api.putUserAvatar(userData);
-    store.set('currentUser', newUser);
+    store.set('user', newUser);
   }
 
   async putPassword(userData: string) {
