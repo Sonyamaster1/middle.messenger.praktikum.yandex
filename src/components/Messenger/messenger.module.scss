@@ -25,3 +25,10 @@
 .messenger__footer button {
     margin-left: auto;
 }
+
+.create-delete {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    padding: 5px 0;
+}
