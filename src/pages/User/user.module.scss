@@ -1,77 +1,23 @@
-.page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.user-section {
-  background: #fff;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 14%);
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  padding: 50px 30px 30px;
-}
-
 .user-form {
-  display: flex;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 20px;
-  flex-direction: column;
-  gap: 20px;
+    display: flex;
+    padding: 10px 0;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 20px;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .input {
-  width: 510px;
-  border: none;
-  border-bottom: 1px solid #eaeaea;
-  outline: none;
+    width: 510px;
+    border: none;
+    border-bottom: 1px solid #eaeaea;
+    outline: none;
 }
 
 .title {
-  text-align: center;
-  color: #1e1e1e;
-}
-
-.avatar-container {
-  background: #efefef;
-  border-radius: 50%;
-  width: 130px;
-  height: 130px;
-  margin: 0 auto 20px;
-  background-image: url('../../static/icons/avatar.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: 0.2s ease-in-out;
-}
-
-.avatar-container:hover {
-  background-color: rgba(0, 0, 0, 15%);
-  transition: 0.2s ease-in-out;
-}
-
-.input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.to-registry-btn {
-  padding: 12px 70px;
-  background: #3369f3;
-  border-radius: 8px;
-  border: none;
-  color: #fff;
-  text-decoration: none;
-  font-size: 16px;
-  text-align: center;
-  margin: 30px 0 15px;
-}
-
-.to-registry-btn:hover {
-  background-color: rgba(51, 105, 243, 90%);
+    text-align: center;
+    color: #1e1e1e;
 }
 
 .container {
@@ -79,4 +25,34 @@
     padding-top: 20px;
     flex-direction: column;
     gap: 20px;
+}
+
+.avatar {
+    width: 90px;
+    height: 90px;
+    background-color: rgba(196, 196, 196);
+    border: 1px solid #000;
+    border-radius: 45%;
+    padding: 10px;
+}
+
+.imgContainer {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.avatar {
+    border: none;
+    padding: 0;
+    margin-right: 20px;
+    width: 120px;
+    height: 120px;
+    background: none;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

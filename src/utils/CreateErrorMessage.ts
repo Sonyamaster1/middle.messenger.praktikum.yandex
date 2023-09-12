@@ -1,4 +1,4 @@
-export function createErrorMessage(inputTarget: any, errMessage: string) {
+export function createErrorMessage(_inputTarget: any, errMessage: string) {
   let err = document.getElementById('error');
 
   err!.style.display = 'block';

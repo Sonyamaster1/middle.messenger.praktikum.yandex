@@ -1,27 +1,19 @@
-type Handler = (...args: unknown[]) => void;
-export default class EventBus {
-  private listeners: Record<string, Handler[]> = {};
+type EventList = Record<string | number | symbol, unknown[]>;
 
-  on(event: string, callback: Handler) {
-    if (!this.listeners[event]) {
-      this.listeners[event] = [];
-    }
-    this.listeners[event]?.push(callback);
+export default class EventBus<Events extends EventList = EventList> {
+  private readonly listeners = {} as { [K in keyof Events]?: Array<(...args: Events[K]) => void>; };
+
+  public on<K extends keyof Events>(event: K, callback: (...args: Events[K]) => void): void {
+    const events = this.listeners[event] ?? [];
+    events.push(callback);
+    this.listeners[event] = events;
   }
 
-  off(event: string, callback: Handler) {
-    this.listeners[event] = this.listeners[event].filter(
-      listener => listener !== callback,
-    );
+  public off<K extends keyof Events>(event: K, callback: (...args: Events[K]) => void): void {
+    this.listeners[event] = this.listeners[event]?.filter((listener) => listener !== callback) ?? [];
   }
 
-  emit(event: string, ...args: unknown[]): void {
-    if (!this.listeners[event]) {
-      throw new Error(`Нет события: ${event}`);
-    }
-
-    this.listeners[event]!.forEach(listener => {
-      listener(...args);
-    });
+  public emit<K extends keyof Events>(event: K, ...args: Events[K]): void {
+    this.listeners[event]?.forEach((listener) => listener(...args));
   }
 }

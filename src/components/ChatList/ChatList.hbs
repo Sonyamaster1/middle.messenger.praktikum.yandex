@@ -1,0 +1,20 @@
+<div class="{{ styles.chats-list }}">
+    <h4>Список чатов</h4>
+{{#if isLoading }}
+    {{#each chats}}
+        {{{this}}}
+    {{/each}}
+    {{{profileLink}}}
+{{else}}
+  Loading...
+{{/if}}
+<div>
+{{{logoutbutton}}}
+<div class="{{ styles.add-chat }}">
+<form id="create-chat">
+{{{addnewchatinput}}}
+{{{addnewchatbutton}}}
+</div>
+</form>
+</div>
+</div>

@@ -18,7 +18,7 @@
     -webkit-text-size-adjust: 100%;
 }
 
-a {
+.button {
     font-weight: 500;
     background-color: #646cff;
     color: #fff;
@@ -26,8 +26,9 @@ a {
     margin: 0 auto;
     border-radius: 12px;
     text-decoration: inherit;
+    border: none;
 }
-a:hover {
+.button :hover {
     background-color: #535bf2;
 }
 

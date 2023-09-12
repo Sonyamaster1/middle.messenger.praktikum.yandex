@@ -1,4 +1,3 @@
-
 import EventBus from './EventBus';
 import { nanoid } from 'nanoid';
 import { Props } from '../types';
@@ -14,17 +13,17 @@ export default class Block {
 
   public id = nanoid(6);
 
-  private _element: HTMLElement;
+  private _element: HTMLElement | undefined;
 
   private tagName: string;
 
-  private _meta: { props: Props };
+  _meta: { props: Props };
 
-  protected props: Props;
+  protected props: Props | any;
 
   private eventBus: () => EventBus;
 
-  protected children: Record<string, Block>;
+  protected children: Record<string, Block | Block[]>;
 
   constructor(propsAndChildren: Props = {}, tagName: string = 'div') {
     this.tagName = tagName;
@@ -33,9 +32,9 @@ export default class Block {
     this._meta = {
       props,
     };
+    this.props = this._makePropsProxy(props);
     this.children = children;
     this.initChildren();
-    this.props = this._makePropsProxy(props);
     this.eventBus = () => eventBus;
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
@@ -66,7 +65,7 @@ export default class Block {
   }
 
 
-  private init(): void {
+  protected init(): void {
     this.createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
@@ -93,14 +92,13 @@ export default class Block {
     this.componentWillUnmount();
     this._removeEvents();
 
-    this.element.remove();
   }
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps: Props, newProps: Props) {
+  private _componentDidUpdate(oldProps: any, newProps: any) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -109,11 +107,11 @@ export default class Block {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  componentDidUpdate(_oldProps: Props, _newProps: Props) {
+  protected componentDidUpdate(_oldProps: Props, _newProps: Props) {
     return true;
   }
 
-  setProps = (nextProps) => {
+  setProps = (nextProps: any) => {
     if (!nextProps) {
       return;
     }
@@ -130,6 +128,7 @@ export default class Block {
   }
 
   private _render() {
+    this.unmountComponent();
     const fragment = this.render();
     const newElement = fragment.firstElementChild as HTMLElement;
 
@@ -147,8 +146,10 @@ export default class Block {
     return new DocumentFragment();
   }
 
-  getContent(): HTMLElement {
-    return this.element;
+  getContent() {
+    if (this.element) {
+      return this.element;
+    }
   }
 
   private _makePropsProxy(props: Props) {
@@ -172,14 +173,14 @@ export default class Block {
   }
 
   show() {
-    this.getContent().style.display = 'block';
+    this.getContent()!.style.display = 'block';
   }
 
   hide() {
-    this.getContent().style.display = 'none';
+    this.getContent()!.style.display = 'none';
   }
 
-  private _addEvents() {
+  _addEvents() {
     const events: Record<string, () => void> = (this.props as Props).events;
     if (!events) {
       return;
@@ -194,50 +195,49 @@ export default class Block {
 
     if (events) {
       Object.keys(events).forEach((eventName) => {
-        this.element.addEventListener(eventName, events[eventName]);
+        this.element?.removeEventListener(eventName, events[eventName]);
       });
     }
   }
 
-  compile(template: (context: any) => string, context: any) {
+  protected compile(template: (context: any) => string, context: any) {
     const fragment = this._createDocumentElement(
       'template',
     ) as HTMLTemplateElement;
 
-    Object.entries(this.children).forEach(([key, child]) => {
-      if (Array.isArray(child)) {
-        context[key] = child.map(
-          (ch) => `<div data-id="id-${ch.id}"></div>`,
-        );
-
-        return;
+    Object.entries(this.children).forEach(([name, component]) => {
+      if (Array.isArray(component)) {
+        context[name] = component.map(child => `<div data-id="${child.id}"></div>`);
+      } else {
+        context[name] = component && `<div data-id="${component.id}"></div>`;
       }
-
-      context[key] = `<div data-id="id-${child.id}"></div>`;
     });
 
     const htmlString = template(context);
     fragment.innerHTML = htmlString;
 
-
-
-    Object.entries(this.children).forEach(([key, child]) => {
-      if (Array.isArray(child)) {
-        context[key] = child.map((ch) => `<div data-id="id-${ch.id}"></div>`);
-        return;
-      }
-
-      const stub = fragment.content.querySelector(`[data-id="id-${child.id}"]`);
+    const replaceStub = (component: Block) => {
+      const stub = component && fragment.content.querySelector(`[data-id="${component.id}"]`);
 
       if (!stub) {
         return;
       }
 
-      stub.replaceWith(child.getContent()!);
-    });
+      component.getContent()?.append(...Array.from(stub.childNodes));
 
+      stub.replaceWith(component.getContent()!);
+    };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Object.entries(this.children).forEach(([_, component]) => {
+      if (Array.isArray(component)) {
+        component.forEach(replaceStub);
+      } else {
+        replaceStub(component);
+      }
+    });
     return fragment.content;
   }
 
   protected initChildren() {}
 }
+

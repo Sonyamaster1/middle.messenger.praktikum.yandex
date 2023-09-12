@@ -2,30 +2,42 @@
     <section class="user-section">
         <h2 class="title">Change a user</h2>
         <div class="container">
-        <form class="user-form" id="avatar-form">
-            <div class="avatar-container"></div>
-            {{{inputavatar}}}
-            {{{buttonavatar}}}
-        </form>
-        {{!-- <p id="error" class="error"></p> --}}
-        <form class="user-form" id="registry-form">
-            {{{inputemail}}}
-            {{{inputlogin}}}
-            {{{inputfirst_name}}}
-            {{{inputsecond_name}}}
-            {{{inputdisplay_name}}}
-            {{{inputphone}}}
+            {{#if props.isAvatar}}
+            <div class="{{styles.imgContainer}}">
+                <img
+                    class='{{styles.avatar}}'
+                    src='{{props.avatar}}'
+                    alt="avatar"
+                />
+            {{else}}
+                <div class='{{styles.avatar}}' width="450" height="450">Аватар
+                    отсутствует</div>
+                    </div>
+            {{/if}}
+            <div class="user-form">
+                {{{logoutbtn}}}
+                {{{inputavatar}}}
+                <input id="avatar" type="file" name="avatar" accept="image/*" />
 
-            {{{enterbutton}}}
-        </form>
-        {{!-- <p id="error" class="error"></p> --}}
-        <form class="user-form" id="password-form">
-            {{{inputoldpass}}}
-            {{{inputnewpass}}}
-            {{{buttonchangepass}}}
-        </form>
-        <p id="error" class="error"></p>
-        {{{button}}}
+                {{{buttonavatar}}}
+                <form class="{{ styles.userInfo }}" id="settings-registry-form">
+                {{{inputemail}}}
+                {{{inputlogin}}}
+                {{{inputfirst_name}}}
+
+                {{{inputsecond_name}}}
+                {{{inputdisplay_name}}}
+                {{{inputphone}}}
+
+                {{{editbutton}}}
+                </form>
+                {{{buttonlogout}}}
+                {{{inputoldpass}}}
+                {{{inputnewpass}}}
+                {{{buttonchangepass}}}
+                {{{buttontomessenger}}}
+            </div>
+            <p id="error" class="error"></p>
         </div>
     </section>
 </main>

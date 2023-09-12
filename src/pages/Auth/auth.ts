@@ -4,8 +4,10 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Block from '../../utils/Block';
 import { createErrorMessage } from '../../utils/CreateErrorMessage';
-import { getFormData } from '../../utils/getFormData';
 import * as styles from '../../../style.scss';
+import AuthController from '../../controllers/AuthController';
+import router from '../../utils/router';
+import { ISignInData } from '../../api/AuthApi/AuthApi.interfaces';
 
 
 interface IAuthProps {
@@ -20,23 +22,11 @@ export default class AuthPage extends Block {
   protected initChildren(): void {
     this.children.enterbtn = new Button({
       text: 'Enter',
-      link: '../Chats/chats.html',
       type: 'submit',
-      class: 'btn',
+      class: 'button',
       events: {
-        click: (e: any) => {
-          e.preventDefault();
-          const formData = getFormData('auth-form');
-          let loginReg = validation.login.regExp;
-          if (!loginReg.test(formData.login)) {
-            createErrorMessage(e.target, validation.login.message);
-          }
-          const passwordRegExp = validation.password.regExp;
-          if (!passwordRegExp.test(formData.password)) {
-            return createErrorMessage(e.target, validation.password.message);
-          }
-
-          location.href = '/pages/Chats/chats.html';
+        click: () => {
+          this.onSubmit();
         },
       },
     });
@@ -44,12 +34,10 @@ export default class AuthPage extends Block {
     this.children.toregistrybtn = new Button({
       text: 'Sign Up',
       type: 'button',
-      class: 'sign-in-link',
-      link: '../Registry/registry.html',
+      class: 'button',
       events: {
-        click: (e) => {
-          e.preventDefault();
-          location.href = '/pages/Registry/registry.html';
+        click: () => {
+          router.go('/sign-up');
         },
       },
     });
@@ -93,6 +81,17 @@ export default class AuthPage extends Block {
         },
       },
     });
+  }
+
+  onSubmit() {
+    const values = Object
+      .values(this.children)
+      .filter(child => child instanceof Input)
+      .map((child) => ([(child as Input).getName(), (child as Input).getValue()]));
+
+    const data = Object.fromEntries(values);
+
+    AuthController.signIn(data as ISignInData);
   }
 
   render() {
