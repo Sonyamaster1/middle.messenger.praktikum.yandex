@@ -1,5 +1,5 @@
-import Block from '../../utils/Block';
-import { withRouter } from '../../utils/hocks';
+import Block from '../../utils/Block.ts';
+import { withRouter } from '../../utils/hocks/index.ts';
 import template from './link.hbs';
 
 interface ILinkProps {
