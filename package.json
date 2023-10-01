@@ -13,7 +13,8 @@
     "eslint": "eslint --ignore-path .gitignore .",
     "lint": "npm run eslint && npm run stylelint",
     "stylelint": "npx stylelint **/*.scss",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "check-all": "npm-run-all build test lint"
   },
   "devDependencies": {
     "@types/chai": "^4.3.6",
@@ -35,14 +36,17 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
+    "@anikin/parcel-transformer-handlebars-precompile": "^1.0.1",
     "dotenv": "^16.3.1",
     "eslint-config-airbnb-typescript": "^17.0.0",
+    "esm-loader-css": "^1.0.5",
     "esmock": "^2.5.1",
     "express": "^4.18.2",
     "handlebars": "^4.7.7",
     "i": "^0.3.7",
     "jsdom": "^22.1.0",
     "nanoid": "^4.0.2",
+    "node-esm-loader": "^0.2.5",
     "npm": "^9.7.2",
     "path": "^0.12.7",
     "sass": "^1.62.1",

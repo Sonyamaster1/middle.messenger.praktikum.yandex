@@ -1,9 +1,6 @@
 import Router, { BlockConstructable } from './router.ts';
 import { expect } from 'chai';
-import esmock from 'esmock';
 import sinon from 'sinon';
-import Block from './Block.ts';
-import { template } from 'handlebars';
 
 describe('Router', () => {
 
@@ -28,14 +25,14 @@ describe('Router', () => {
     getContent = getContentFake;
   } as unknown as BlockConstructable;
 
-  it('use() should return Router instance', () => {
+  it('метод use()', () => {
     const result = Router.use('/', BlockMock);
 
     expect(result).to.eq(Router);
   });
 
   describe('.back()', () => {
-    it('should render a page on history back action', () => {
+    it('переходит назад', () => {
       Router
         .use('/', BlockMock)
         .start();
@@ -47,7 +44,7 @@ describe('Router', () => {
   });
 
   describe('.forward()', () => {
-    it('should render a page on history forward action', () => {
+    it('переходит вперед', () => {
       Router
         .use('/', BlockMock)
         .start();
@@ -58,7 +55,19 @@ describe('Router', () => {
     });
   });
 
-  it('should render a page on start', () => {
+  describe('.go()', () => {
+    it('переходит по роуту', () => {
+      Router
+        .use('/', BlockMock)
+        .start();
+
+      Router.go('/');
+
+      expect(getContentFake.callCount).to.eq(1);
+    });
+  });
+
+  it('рендер страницы', () => {
     Router
       .use('/', BlockMock)
       .start();

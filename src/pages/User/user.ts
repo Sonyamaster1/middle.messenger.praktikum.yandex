@@ -10,7 +10,7 @@ import { AvatarInput } from '../../components/AvatarInput';
 import UserController from '../../controllers/UserController';
 import AuthController from '../../controllers/AuthController';
 import store, { IState, withStore } from '../../utils/Store';
-import { Link } from '../../components/Link/link';
+import { Link } from '../../components/Link';
 
 interface IUserProps {
   className: string;

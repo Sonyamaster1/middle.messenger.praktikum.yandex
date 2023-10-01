@@ -5,7 +5,7 @@
       "./mochaSetup.js"
     ],
     "node-option": [
-      "loader=esm-loader-typescript",
+      "loader=node-esm-loader",
       "loader=esmock"
     ]
   }

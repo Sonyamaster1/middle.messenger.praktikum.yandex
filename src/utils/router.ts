@@ -1,7 +1,8 @@
 import Block from '../utils/Block';
 
 export interface BlockConstructable<P extends Record<string, any> = any> {
-  new(props: P): Block;
+  new(props: P): Block<P>;
+  EVENTS: any;
 }
 
 function isEqual(lhs: string, rhs: string): boolean {

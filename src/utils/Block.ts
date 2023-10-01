@@ -2,7 +2,7 @@ import EventBus from './EventBus.ts';
 import { nanoid } from 'nanoid';
 import { Props } from '../types';
 
-export default class Block {
+export default class Block<P extends Record<string, any> = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -19,7 +19,7 @@ export default class Block {
 
   _meta: { props: Props };
 
-  protected props: Props | any;
+  protected props: Props | any | P;
 
   private eventBus: () => EventBus;
 

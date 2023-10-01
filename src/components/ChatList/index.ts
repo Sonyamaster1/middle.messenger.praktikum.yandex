@@ -4,7 +4,7 @@ import ChatsController from '../../controllers/ChatsController';
 import Block from '../../utils/Block';
 import store, { withStore } from '../../utils/Store';
 import { Chat } from '../Chat';
-import { Link } from '../Link/link';
+import { Link } from '../Link';
 import styles from './ChatList.module.scss';
 import Button from '../Button';
 import AuthController from '../../controllers/AuthController';
