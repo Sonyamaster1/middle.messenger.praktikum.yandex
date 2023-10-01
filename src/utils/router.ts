@@ -1,5 +1,9 @@
 import Block from '../utils/Block';
 
+export interface BlockConstructable<P extends Record<string, any> = any> {
+  new(props: P): Block<P>;
+  EVENTS: any;
+}
 
 function isEqual(lhs: string, rhs: string): boolean {
   return lhs === rhs;
@@ -47,7 +51,7 @@ class Route {
 }
 
 class Router {
-  private static __instance: Router;
+  private static __instance?: Router;
 
   private routes: Route[] = [];
 
@@ -102,6 +106,12 @@ class Router {
     this.history.pushState({}, '', pathname);
 
     this._onRoute(pathname);
+  }
+
+  public reset() {
+    delete Router.__instance;
+
+    new Router(this.rootQuery);
   }
 
   public back() {
