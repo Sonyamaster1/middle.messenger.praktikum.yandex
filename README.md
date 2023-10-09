@@ -3,6 +3,7 @@
 - ` npm install` установка зависимостей
 - `npm run start` запуск локальной версии
 - `npm run build` сборка проекта
+- `npm run test` тестирование
 ---
 ## Ссылка на макет
 https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1

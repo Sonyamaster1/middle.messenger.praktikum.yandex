@@ -1,5 +1,5 @@
 import { API } from '../api';
-import { IMyUserInt, IUserData, IUserPassword } from './UserApi.interfaces';
+import { IMyUserInt, IUserData, IUserPassword } from './UserApi.interfaces.ts';
 
 export default class UserApi extends API {
 
